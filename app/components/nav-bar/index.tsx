@@ -30,6 +30,12 @@ const components: { title: string; href: string; description: string }[] = [
     href: "/who-s-on-site",
     description:
       "Check if your friend is on site",
+  },
+  {
+    title: "My Resume",
+    href: "/resume",
+    description:
+      "Your public resume",
   }
 ]
 
@@ -91,7 +97,7 @@ export function NavBar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Apps</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                 {components.map((component) => (
