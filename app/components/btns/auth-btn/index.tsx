@@ -3,13 +3,13 @@ import { getServerSession } from "next-auth"
 import { SignOutBtn } from "../sign-out-btn"
 import { SignInBtn } from "../sign-in-btn"
 
-export const AuthBtn = async () => {
+export const AuthBtn = async ({ callbackUrl }: { callbackUrl: string}) => {
   const session = await getServerSession(authOptions)
   return (
     <div>
       {session 
         ? <SignOutBtn />
-        : <SignInBtn />}
+        : <SignInBtn callbackUrl={callbackUrl} />}
     </div>
   )
 }
