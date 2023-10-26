@@ -16,7 +16,8 @@
 				"mongodb.mongodb-vscode",
 				"GitHub.copilot-chat",
 				"WallabyJs.console-ninja",
-				"bradlc.vscode-tailwindcss"
+				"bradlc.vscode-tailwindcss",
+				"esbenp.prettier-vscode"
 			]
 		},
 

@@ -1,4 +1,8 @@
 {
-    "terminal.integrated.cwd": "app",
-    "editor.tabSize": 2
+  "terminal.integrated.cwd": "app",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false
 }

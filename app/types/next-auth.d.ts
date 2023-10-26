@@ -12,6 +12,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       login: string
+      isStaff: boolean
     } & DefaultSession["user"]
   }
   interface Profile extends FortyTwoProfile {}
@@ -21,6 +22,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     user: {
       login: string
+      isStaff: boolean
     }
   }
 }

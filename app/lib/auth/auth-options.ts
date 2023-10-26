@@ -1,5 +1,5 @@
 /**
- * Configuration options for NextAuth. 
+ * Configuration options for NextAuth.
  * See: https://next-auth.js.org/configuration/options
  * See: app/types/next-auth.d.ts for type definitions.
  *
@@ -23,34 +23,36 @@
  *   The function should update the `session.user` object with the user's login name from the token,
  *   and return the updated session object.
  */
-import type { NextAuthOptions } from 'next-auth'
+import type { NextAuthOptions } from "next-auth";
 import FortyTwoProvider from "next-auth/providers/42-school";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     FortyTwoProvider({
       clientId: process.env.FORTY_TWO_CLIENT_ID as string,
-      clientSecret: process.env.FORTY_TWO_CLIENT_SECRET as string
-    })
+      clientSecret: process.env.FORTY_TWO_CLIENT_SECRET as string,
+    }),
   ],
   callbacks: {
     async jwt({ token, trigger, profile }) {
-      if (profile && trigger === 'signIn') {
+      if (profile && trigger === "signIn") {
         return {
           ...token,
           user: {
             login: profile.login,
-          }
-        }
+            isStaff: profile["staff?"],
+          },
+        };
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       session.user = {
         ...session.user,
         login: token.user.login,
-      }
-      return session
-    }
+        isStaff: token.user.isStaff,
+      };
+      return session;
+    },
   },
-}
+};
