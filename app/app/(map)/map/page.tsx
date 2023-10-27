@@ -1,11 +1,9 @@
+import { Map } from "../_components/map"
+
 export default function Page() {
   return (
-    <div className="h-screen flex items-center">
-      <div className="container mx-auto h-3/4">
-        <p className="text-center">
-          Hello, select an App to get started.
-        </p>
-      </div>
-    </div>
+    <main>
+      <Map lat={13.7298941} lng={100.7756574} zoom={16} />
+    </main>
   )
 }
