@@ -23,6 +23,20 @@ To get started with contributing, you'll need to follow these steps:
 5. Push your changes to your fork: `git push origin your-feature`.
 6. Create a **Pull Request** (PR) from your branch to the main repository.
 
+## Deploying project on local machine
+
+1. Clone the repository to your local machine.
+2. Install dependencies: `npm install`.
+3. Create a `.env.local` file in the root directory of the project and add the following environment variables:
+```
+FORTY_TWO_CLIENT_ID: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
+FORTY_TWO_CLIENT_SECRET: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
+NEXTAUTH_URL: http://localhost:3000 if you are running the project locally
+NEXTAUTH_SECRET: any random string
+```
+4. Run the project: `npm run dev`.
+
+
 ## Submitting Issues
 
 If you find any bugs, have questions, or want to suggest enhancements, please [open an issue](https://github.com/yourusername/yourrepository/issues) on our GitHub repository. Be sure to include detailed information about the issue you're reporting.
