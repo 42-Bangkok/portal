@@ -45,6 +45,7 @@ export const DeleteMarkerSchema = z.object({
   _id: z.string(),
 })
 
+/** when a new field is added, a new default must also be added here */
 export const MarkerSchema = CreateMarkerSchema.extend({
   _id: z.string(),
   updatedBy: z.string(),
