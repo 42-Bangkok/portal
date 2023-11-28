@@ -1,3 +1,7 @@
+/**
+Leaflet uses a lot of z-[x] this will prevent a lot of components to work properly this is why it is a seperate page without NavBar
+*/
+
 'use client'
 
 import 'leaflet/dist/leaflet.css'
@@ -18,8 +22,8 @@ const Map = (props: TMap) => {
     () => (
       <MapContainer
         style={{
-          height: '100vh',
-          width: '100vw'
+          height: '100%',
+          width: '100%'
         }}
         // @ts-ignore
         center={[lat, lng]}
@@ -35,15 +39,15 @@ const Map = (props: TMap) => {
         />
       </MapContainer >), [])
   return (
-    <div>
+    <>
       {displayMap}
-      <MapPinIcon
+      {/* <MapPinIcon
         className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2000]'
         color='red'
         fill='white'
         size='16px'
-      />
-    </div>
+      /> */}
+    </>
   )
 }
 
