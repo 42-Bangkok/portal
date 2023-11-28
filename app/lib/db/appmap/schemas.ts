@@ -9,19 +9,21 @@ export const CreateMarkerSchema = z.object({
   lng: z.number().refine(value => value >= -180 && value <= 180, {
     message: "Longitude must be between -180 and 180",
   }),
+  featured: z.boolean(),
   createdBy: z.string(),
 })
 
 export const UpdateMarkerSchema = z.object({
   _id: z.string(),
-  title: z.string(),
-  description: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
   lat: z.number().refine(value => value >= -90 && value <= 90, {
     message: "Latitude must be between -90 and 90",
-  }),
+  }).optional(),
   lng: z.number().refine(value => value >= -180 && value <= 180, {
     message: "Longitude must be between -180 and 180",
-  }),
+  }).optional(),
+  featured: z.boolean().optional(),
   updatedBy: z.string(),
 })
 
