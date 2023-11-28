@@ -1,3 +1,17 @@
+/**
+* Schemas for the appmap collection
+* tite: title of the marker
+* description: description of the marker
+* lat: latitude of the marker
+* lng: longitude of the marker
+* featured: whether the marker is featured or not, only staff can feature markers
+* createdBy: login of the user who created the marker
+* updatedBy: login of the user who updated the marker
+* createdAt: date when the marker was created
+* updatedAt: date when the marker was updated
+* _id: id of the marker
+*/
+
 import z from 'zod';
 
 export const CreateMarkerSchema = z.object({
