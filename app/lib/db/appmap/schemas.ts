@@ -13,7 +13,7 @@ export const CreateMarkerSchema = z.object({
 })
 
 export const UpdateMarkerSchema = z.object({
-  id: z.string(),
+  _id: z.string(),
   title: z.string(),
   description: z.string(),
   lat: z.number().refine(value => value >= -90 && value <= 90, {
@@ -26,11 +26,11 @@ export const UpdateMarkerSchema = z.object({
 })
 
 export const DeleteMarkerSchema = z.object({
-  id: z.string(),
+  _id: z.string(),
 })
 
 export const MarkerSchema = CreateMarkerSchema.extend({
-  id: z.string(),
+  _id: z.string(),
   updatedBy: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
