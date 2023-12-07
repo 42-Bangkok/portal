@@ -12,8 +12,29 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useMapStore } from "../map/stores";
+import { createMarker } from "@/lib/db/appmap/markers";
+import { toast } from "sonner";
 
-export function NewMarkerDialog() {
+export async function NewMarkerDialog() {
+  const [position] = useMapStore((state) => [state.position]);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log(position);
+    const { data, error } = await createMarker({
+      title: "test",
+      description: "test",
+      lat: position[0],
+      lng: position[1],
+      createdBy: "admin",
+      featured: false,
+    });
+    if (data) {
+      toast.success("Successfully created a new marker!");
+    } else if (error) {
+      toast.error(error);
+    }
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,8 +53,8 @@ export function NewMarkerDialog() {
               Title
             </Label>
             <Input
-              id="name"
-              defaultValue="Pedro Duarte"
+              id="title"
+              placeholder="title of your marker"
               className="col-span-3"
             />
           </div>
@@ -42,14 +63,16 @@ export function NewMarkerDialog() {
               Description
             </Label>
             <Input
-              id="username"
-              defaultValue="@peduarte"
+              id="description"
+              placeholder="short description of your marker"
               className="col-span-3"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

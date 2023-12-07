@@ -57,7 +57,7 @@ export const MapDashboard = async () => {
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-bold">Around 42 BKK</h1>
+        <h1 className="text-2xl font-bold">🗺️ Around 42 BKK</h1>
         <NewMarkerDialog />
       </div>
       <MarkersTable {...markersTableProps} />
