@@ -2,32 +2,41 @@
 Leaflet uses a lot of z-[x] this will prevent a lot of components to work properly this is why it is a seperate page without NavBar
 */
 
-'use client'
+"use client";
 
-import 'leaflet/dist/leaflet.css'
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
-import { useEffect, useState, useMemo } from 'react';
-import { MapPinIcon } from 'lucide-react';
-import { TMap } from './types';
-
-const MapHandler = () => {
-  const map = useMapEvents({})
-  return null
-}
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { useState, useMemo } from "react";
+import { MapPinIcon } from "lucide-react";
+import { TMap } from "./types";
+import { useMapStore } from "./stores";
 
 const Map = (props: TMap) => {
-  const { lat, lng, zoom } = props
-  const [map, setMap] = useState<any>(null)
+  const { initialPosition, initialZoom } = props;
+  const [position, setPosition] = useMapStore((state) => [
+    state.position,
+    state.setPosition,
+  ]);
+  const [map, setMap] = useState<any>(null);
+  const MapHandler = () => {
+    const map = useMapEvents({
+      move: () => {
+        const { lat, lng } = map.getCenter();
+        setPosition([lat, lng]);
+      },
+    });
+    return null;
+  };
   const displayMap = useMemo(
     () => (
       <MapContainer
         style={{
-          height: '100%',
-          width: '100%'
+          height: "100%",
+          width: "100%",
         }}
         // @ts-ignore
-        center={[lat, lng]}
-        zoom={zoom}
+        center={initialPosition}
+        zoom={initialZoom}
         scrollWheelZoom={true}
         ref={setMap}
       >
@@ -37,18 +46,22 @@ const Map = (props: TMap) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-      </MapContainer >), [])
+        {/* eslint-disable-next-line react-hooks/exhaustive-deps */}
+      </MapContainer>
+    ),
+    []
+  );
   return (
-    <>
+    <div className="h-full">
       {displayMap}
-      {/* <MapPinIcon
-        className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2000]'
-        color='red'
-        fill='white'
-        size='16px'
-      /> */}
-    </>
-  )
-}
+      <MapPinIcon
+        className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2000]"
+        color="red"
+        fill="white"
+        size="16px"
+      />
+    </div>
+  );
+};
 
-export default Map
+export default Map;
