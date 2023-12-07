@@ -8,7 +8,7 @@ export default function Page() {
       <div>
         <div className="flex flex-col h-screen">
           <div className="h-[50%]">
-            <Map lat={13.7298941} lng={100.7756574} zoom={16} />
+            <Map initialPosition={[13.7298941, 100.7756574]} initialZoom={16} />
           </div>
           <div className="h-[50%]">
             <Suspense fallback={<MapDashboard.Skeleton />}>
