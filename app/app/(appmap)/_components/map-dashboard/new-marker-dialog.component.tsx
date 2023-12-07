@@ -16,7 +16,7 @@ import { useMapStore } from "../map/stores";
 import { createMarker } from "@/lib/db/appmap/markers";
 import { toast } from "sonner";
 
-export async function NewMarkerDialog() {
+export function NewMarkerDialog() {
   const [position] = useMapStore((state) => [state.position]);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
