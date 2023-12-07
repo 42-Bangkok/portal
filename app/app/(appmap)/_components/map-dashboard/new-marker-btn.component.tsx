@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export const NewMarkerBtn = () => {
   return (
@@ -7,5 +7,5 @@ export const NewMarkerBtn = () => {
         <Button>New Marker</Button>
       </div>
     </div>
-  )
-}
+  );
+};
