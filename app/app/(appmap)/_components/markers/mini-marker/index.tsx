@@ -8,6 +8,8 @@ import Link from "next/link";
  *  This marker is shown on the map
  */
 export const MiniMarker = (props: TMiniMarker) => {
+  console.log(props);
+  console.log("hello");
   return (
     <JSXMarker
       position={props.position}

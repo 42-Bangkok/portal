@@ -34,8 +34,8 @@ const Map = (props: TMap) => {
     setMarkers(props.markers);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return (
-    <div className="h-full">
+  const DisplayMap = useMemo(
+    () => (
       <MapContainer
         style={{
           height: "100%",
@@ -51,17 +51,25 @@ const Map = (props: TMap) => {
         {markers.map((marker) => (
           <MiniMarker
             key={marker.id}
+            id={marker.id}
             position={[marker.lat, marker.lng]}
             title={marker.title}
             description={marker.description}
+            featured={marker.featured}
           />
         ))}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* eslint-disable-next-line react-hooks/exhaustive-deps */}
       </MapContainer>
+    ),
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+    [markers]
+  );
+  return (
+    <div className="h-full">
+      {DisplayMap}
       <MapPinIcon
         className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2000]"
         color="red"

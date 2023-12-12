@@ -7,7 +7,9 @@
  * @property {string} description - The description of the marker.
  */
 export type TMiniMarker = {
-  position: [number, number]
-  title: string
-  description: string
-}
+  id: string;
+  position: [number, number];
+  title: string;
+  description: string;
+  featured: boolean;
+};
