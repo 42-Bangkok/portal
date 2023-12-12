@@ -11,6 +11,7 @@ import {
 import { authOptions } from "@/lib/auth/auth-options";
 import { getDb } from "../db";
 import { revalidatePath } from "next/cache";
+import { ObjectId } from "mongodb";
 
 export async function createMarker(
   data: TCreateMarker
@@ -82,4 +83,16 @@ export async function getMarkers(amt: number): Promise<TMarker[]> {
     return _;
   });
   return markers;
+}
+
+export async function deleteMarker(id: string): Promise<SAResponse<boolean>> {
+  const db = await getDb();
+  const res = await db
+    .collection("markers")
+    .deleteOne({ _id: new ObjectId(id) });
+  if (!res.acknowledged) {
+    return { data: null, error: "failed to delete marker" };
+  }
+  revalidatePath("/map", "page");
+  return { data: true, error: null } as SAResponse<boolean>;
 }

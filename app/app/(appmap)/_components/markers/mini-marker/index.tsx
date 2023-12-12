@@ -1,15 +1,14 @@
 import { JSXMarker } from "../jsx-marker";
 import { TMiniMarker } from "./types";
-import { MapIcon } from "lucide-react";
+import { CogIcon, MapIcon, MenuIcon, SettingsIcon, XIcon } from "lucide-react";
 import { Card, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { DeleteMarkerDialog } from "./delete-marker-dialog.component";
 
 /**
  *  This marker is shown on the map
  */
 export const MiniMarker = (props: TMiniMarker) => {
-  console.log(props);
-  console.log("hello");
   return (
     <JSXMarker
       position={props.position}
@@ -23,18 +22,19 @@ export const MiniMarker = (props: TMiniMarker) => {
         <CardTitle className="flex items-center justify-begining w-full h-full space-x-1">
           <p className="truncate">{props.title}</p>
         </CardTitle>
-        <Link
-          href={`https://maps.google.com/maps?q=${props.position[0]},${props.position[1]}`}
-          target="_blank"
-        >
-          <div className="bg-blue-500 rounded-full p-2 absolute top-0 right-0 p4">
-            <MapIcon
-              className="absolute top-0 right-0"
-              size={16}
-              fill="white"
-            />
+        <div className="flex gap-1 absolute top-0 right-0">
+          <div className="bg-blue-500 rounded-full">
+            <DeleteMarkerDialog id={props.id} />
           </div>
-        </Link>
+          <Link
+            href={`https://maps.google.com/maps?q=${props.position[0]},${props.position[1]}`}
+            target="_blank"
+          >
+            <div className="bg-blue-500 rounded-full">
+              <MapIcon size={16} fill="white" />
+            </div>
+          </Link>
+        </div>
       </Card>
     </JSXMarker>
   );
