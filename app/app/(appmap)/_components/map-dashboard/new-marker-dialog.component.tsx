@@ -29,13 +29,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FormSchema, TFormSchema } from "./schemas";
-import { useRouter } from "next/navigation";
 
 /**
  * Dialog to create a new marker
  */
 export function NewMarkerDialog() {
-  const router = useRouter();
   const [markers, setMarkers] = useMapStore((state) => [
     state.markers,
     state.setMarkers,

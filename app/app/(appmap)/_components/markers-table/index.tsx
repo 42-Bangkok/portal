@@ -7,11 +7,7 @@ import { Table } from "./table";
 
 export const MarkersTable = async () => {
   const markers = await getMarkers(100);
-  return (
-    <>
-      <Table data={markers} />
-    </>
-  );
+  return <Table data={markers} />;
 };
 
 MarkersTable.Skeleton = function MarkersTableSkeleton() {
