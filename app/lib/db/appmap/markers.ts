@@ -14,7 +14,7 @@ import { revalidatePath } from "next/cache";
 
 export async function createMarker(
   data: TCreateMarker
-): Promise<SAResponse<boolean>> {
+): Promise<SAResponse<TMarker>> {
   const parsed = CreateMarkerSchema.safeParse(data);
   if (!parsed.success) {
     return { data: null, error: "invalid data" };
@@ -41,7 +41,21 @@ export async function createMarker(
     return { data: null, error: "failed to create marker" };
   }
   revalidatePath("/map");
-  return { data: true, error: null };
+  return {
+    data: MarkerSchema.parse({
+      id: res.insertedId.toHexString(),
+      title: parsed.data.title,
+      description: parsed.data.description,
+      lat: parsed.data.lat,
+      lng: parsed.data.lng,
+      featured: false,
+      createdBy: session.user.login,
+      updatedBy: session.user.login,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }),
+    error: null,
+  };
 }
 
 export async function getMarkers(amt: number): Promise<TMarker[]> {

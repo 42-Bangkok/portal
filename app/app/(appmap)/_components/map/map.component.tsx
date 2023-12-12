@@ -14,9 +14,11 @@ import { MiniMarker } from "../markers/mini-marker";
 
 const Map = (props: TMap) => {
   const { initialPosition, initialZoom } = props;
-  const [position, setPosition] = useMapStore((state) => [
+  const [position, setPosition, markers, setMarkers] = useMapStore((state) => [
     state.position,
     state.setPosition,
+    state.markers,
+    state.setMarkers,
   ]);
   const [map, setMap] = useState<any>(null);
   const MapHandler = () => {
@@ -42,11 +44,14 @@ const Map = (props: TMap) => {
         ref={setMap}
       >
         <MapHandler />
-        <MiniMarker
-          position={position}
-          title="Around 42 BKK there is a good place to do"
-          description=""
-        />
+        {props.markers.map((marker) => (
+          <MiniMarker
+            key={marker.id}
+            position={[marker.lat, marker.lng]}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -54,7 +59,7 @@ const Map = (props: TMap) => {
         {/* eslint-disable-next-line react-hooks/exhaustive-deps */}
       </MapContainer>
     ),
-    []
+    [markers]
   );
   return (
     <div className="h-full">

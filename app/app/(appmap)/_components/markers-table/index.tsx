@@ -1,12 +1,21 @@
-'use client'
+/**
+ * The first layer of a component if it fetches data should be an RSC.
+ */
 
-import { DataTable } from "@/components/ui/data-table/data-table"
-import { columns } from "./columns"
-import { TMarkersTable } from "./types"
+import { getMarkers } from "@/lib/db/appmap/markers";
+import { Table } from "./table";
+import { StoreHandler } from "./storeHandler";
 
-
-export const MarkersTable = (props: TMarkersTable) => {
+export const MarkersTable = async () => {
+  const markers = await getMarkers(100);
   return (
-    <DataTable columns={columns} data={props.data} />
-  )
-}
+    <>
+      <Table data={markers} />
+      {/* <StoreHandler markers={markers} /> */}
+    </>
+  );
+};
+
+MarkersTable.Skeleton = function MarkersTableSkeleton() {
+  return <div>Loading...</div>;
+};

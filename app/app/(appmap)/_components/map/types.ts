@@ -1,3 +1,5 @@
+import { TMarker } from "@/lib/db/appmap/schemas";
+
 /**
  * Map types
  * @typedef {Object} TMap
@@ -7,4 +9,5 @@
 export type TMap = {
   initialPosition: [number, number];
   initialZoom: number;
+  markers: TMarker[];
 };

@@ -25,19 +25,20 @@ import { useMapStore } from "../map/stores";
 import { createMarker } from "@/lib/db/appmap/markers";
 import { toast } from "sonner";
 import { useState } from "react";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const FormSchema = z.object({
-  title: z.string().min(5, { message: "Title is required" }),
-  description: z.string().min(5, { message: "Description is required" }),
-});
+import { z } from "zod";
+import { FormSchema, TFormSchema } from "./schemas";
+import { useRouter } from "next/navigation";
 
 /**
  * Dialog to create a new marker
  */
 export function NewMarkerDialog() {
+  const [markers, setMarkers] = useMapStore((state) => [
+    state.markers,
+    state.setMarkers,
+  ]);
   const [position] = useMapStore((state) => [state.position]);
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -49,20 +50,20 @@ export function NewMarkerDialog() {
     },
   });
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: TFormSchema) => {
     setPending(true);
     const { data, error } = await createMarker({
-      title: "test",
-      description: "test",
+      title: e.title,
+      description: e.description,
       lat: position[0],
       lng: position[1],
-      createdBy: "admin",
-      featured: false,
     });
     if (data) {
       toast.success("Successfully created a new marker!");
+      setMarkers([...markers, data]);
       setOpen(false);
       setPending(false);
+      form.reset();
     } else if (error) {
       setPending(false);
       toast.error(error);
