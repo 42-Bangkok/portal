@@ -6,7 +6,7 @@ Leaflet uses a lot of z-[x] this will prevent a lot of components to work proper
 
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { MapPinIcon } from "lucide-react";
 import { TMap } from "./types";
 import { useMapStore } from "./stores";
@@ -20,7 +20,7 @@ const Map = (props: TMap) => {
     state.markers,
     state.setMarkers,
   ]);
-  const [map, setMap] = useState<any>(null);
+  // const [map, setMap] = useState<any>(null);
   const MapHandler = () => {
     const map = useMapEvents({
       move: () => {
@@ -30,8 +30,12 @@ const Map = (props: TMap) => {
     });
     return null;
   };
-  const displayMap = useMemo(
-    () => (
+  useEffect(() => {
+    setMarkers(props.markers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div className="h-full">
       <MapContainer
         style={{
           height: "100%",
@@ -41,10 +45,10 @@ const Map = (props: TMap) => {
         center={initialPosition}
         zoom={initialZoom}
         scrollWheelZoom={true}
-        ref={setMap}
+        // ref={setMap}
       >
         <MapHandler />
-        {props.markers.map((marker) => (
+        {markers.map((marker) => (
           <MiniMarker
             key={marker.id}
             position={[marker.lat, marker.lng]}
@@ -58,12 +62,6 @@ const Map = (props: TMap) => {
         />
         {/* eslint-disable-next-line react-hooks/exhaustive-deps */}
       </MapContainer>
-    ),
-    [markers]
-  );
-  return (
-    <div className="h-full">
-      {displayMap}
       <MapPinIcon
         className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2000]"
         color="red"

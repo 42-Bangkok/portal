@@ -35,6 +35,7 @@ import { useRouter } from "next/navigation";
  * Dialog to create a new marker
  */
 export function NewMarkerDialog() {
+  const router = useRouter();
   const [markers, setMarkers] = useMapStore((state) => [
     state.markers,
     state.setMarkers,

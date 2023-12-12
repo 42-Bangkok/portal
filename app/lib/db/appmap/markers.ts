@@ -40,7 +40,7 @@ export async function createMarker(
   if (!res.acknowledged) {
     return { data: null, error: "failed to create marker" };
   }
-  revalidatePath("/map");
+  revalidatePath("/map", "page");
   return {
     data: MarkerSchema.parse({
       id: res.insertedId.toHexString(),
