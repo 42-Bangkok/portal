@@ -1,3 +1,6 @@
+/**
+ * New marker dialog used to create new marker
+ */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -13,14 +16,11 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useMapStore } from "../map/stores";
 import { createMarker } from "@/lib/db/appmap/markers";
 import { toast } from "sonner";

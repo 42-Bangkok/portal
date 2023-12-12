@@ -1,12 +1,12 @@
 /**
-Leaflet uses a lot of z-[x] this will prevent a lot of components to work properly this is why it is a seperate page without NavBar
-*/
+ * Leaflet uses a lot of z-[x] this will prevent a lot of components to work properly this is why it is a seperate page without NavBar
+ */
 
 "use client";
 
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { MapPinIcon } from "lucide-react";
 import { TMap } from "./types";
 import { useMapStore } from "./stores";
@@ -14,13 +14,11 @@ import { MiniMarker } from "../markers/mini-marker";
 
 const Map = (props: TMap) => {
   const { initialPosition, initialZoom } = props;
-  const [position, setPosition, markers, setMarkers] = useMapStore((state) => [
-    state.position,
+  const [setPosition, markers, setMarkers] = useMapStore((state) => [
     state.setPosition,
     state.markers,
     state.setMarkers,
   ]);
-  // const [map, setMap] = useState<any>(null);
   const MapHandler = () => {
     const map = useMapEvents({
       move: () => {
@@ -41,11 +39,9 @@ const Map = (props: TMap) => {
           height: "100%",
           width: "100%",
         }}
-        // @ts-ignore
         center={initialPosition}
         zoom={initialZoom}
         scrollWheelZoom={true}
-        // ref={setMap}
       >
         <MapHandler />
         {markers.map((marker) => (

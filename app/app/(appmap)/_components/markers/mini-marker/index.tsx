@@ -1,13 +1,13 @@
+/**
+ *  Marker that is shown on the map
+ */
 import { JSXMarker } from "../jsx-marker";
 import { TMiniMarker } from "./types";
-import { CogIcon, MapIcon, MenuIcon, SettingsIcon, XIcon } from "lucide-react";
+import { MapIcon } from "lucide-react";
 import { Card, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { DeleteMarkerDialog } from "./delete-marker-dialog.component";
 
-/**
- *  This marker is shown on the map
- */
 export const MiniMarker = (props: TMiniMarker) => {
   return (
     <JSXMarker

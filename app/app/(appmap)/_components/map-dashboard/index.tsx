@@ -1,3 +1,6 @@
+/**
+ * Map dashboard component.
+ */
 import { Suspense } from "react";
 import { MarkersTable } from "../markers-table";
 import { NewMarkerDialog } from "./new-marker-dialog.component";
