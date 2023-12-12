@@ -86,7 +86,20 @@ export async function getMarkers(amt: number): Promise<TMarker[]> {
 }
 
 export async function deleteMarker(id: string): Promise<SAResponse<boolean>> {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return { data: null, error: "not authenticated" };
+  }
   const db = await getDb();
+  const marker = await db
+    .collection("markers")
+    .findOne({ _id: new ObjectId(id) });
+  if (!marker) {
+    return { data: null, error: "marker not found" };
+  }
+  if (!session.user.isStaff && marker.createdBy !== session.user.login) {
+    return { data: null, error: "not authorized" };
+  }
   const res = await db
     .collection("markers")
     .deleteOne({ _id: new ObjectId(id) });
