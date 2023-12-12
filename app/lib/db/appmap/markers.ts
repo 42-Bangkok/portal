@@ -1,3 +1,8 @@
+/**
+ * This file contains server actions for managing markers
+ * If the file is marked "use server", every functions here can be called from the client side
+ * NEXT will automatically generate the API endpoints for these functions
+ */
 "use server";
 
 import { getServerSession } from "next-auth";
