@@ -1,4 +1,5 @@
 # portal
+
 https://portal.42bangkok.com is a web service diligently maintained by the cadets, who are students of 42 Bangkok. This platform serves as a vital hub for the 42 Bangkok community, offering a wide range of resources and tools designed to support and enhance the learning experience of its members. It showcases the commitment and dedication of these cadets to create a thriving educational environment, facilitating communication, collaboration, and access to essential information for all students and stakeholders within the 42 Bangkok ecosystem.
 
 # Contribution Guide
@@ -6,6 +7,7 @@ https://portal.42bangkok.com is a web service diligently maintained by the cadet
 Welcome to our open-source project! We appreciate your interest in contributing. Before you start, please take a moment to read through this guide to understand how you can contribute effectively.
 
 ## Table of Contents
+
 1. [Getting Started](#getting-started)
 2. [Submitting Issues](#submitting-issues)
 3. [Making Pull Requests](#making-pull-requests)
@@ -28,14 +30,30 @@ To get started with contributing, you'll need to follow these steps:
 1. Clone the repository to your local machine.
 2. Install dependencies: `npm install`.
 3. Create a `.env.local` file in the root directory of the project and add the following environment variables:
+
 ```
 FORTY_TWO_CLIENT_ID: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
 FORTY_TWO_CLIENT_SECRET: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
 NEXTAUTH_URL: http://localhost:3000 if you are running the project locally
 NEXTAUTH_SECRET: any random string
 ```
+
 4. Run the project: `npm run dev`.
 
+### To get your API keys
+
+To generate your own `FORTY_TWO_CLIENT_ID` and `FORTY_TWO_CLIENT_SECRET`
+
+1. Go to: [https://profile.intra.42.fr/oauth/applications](https://profile.intra.42.fr/oauth/applications)
+2. Click on REGISTER A NEWE APP
+3. Use the following values:
+
+```
+Redirect URI
+http://localhost:3000/api/auth/callback/42-school
+```
+
+Leave everything else default.
 
 ## Submitting Issues
 
@@ -80,7 +98,6 @@ This Code of Conduct applies both within project spaces and in public spaces whe
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [contact email]. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident.
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 1.4, available at [https://www.contributor-covenant.org/version/1/4/code-of-conduct.html](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html).
-
 
 Thank you for contributing to our project! We appreciate your help in making it better.
 
