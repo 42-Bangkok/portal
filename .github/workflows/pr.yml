@@ -15,4 +15,4 @@ jobs:
           TITLE: ${{ github.event.pull_request.title }}
           PR_URL: https://github.com/${GITHUB_REPOSITORY}/pull/${{ github.event.number }}
       run: |
-        curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"New PR: ${{ TITLE }} ${{ PR_URL }}\"}" ${{ vars.DISCORD_OSS_CHANNEL_WEBHOOK_URL}}
+        curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"New PR: $TITLE $PR_URL\"}" ${{ vars.DISCORD_OSS_CHANNEL_WEBHOOK_URL}}
