@@ -32,9 +32,9 @@ To get started with contributing, you'll need to follow these steps:
 3. Create a `.env.local` file in the root directory of the project and add the following environment variables:
 
 ```
-FORTY_TWO_CLIENT_ID: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
-FORTY_TWO_CLIENT_SECRET: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
-NEXTAUTH_URL: http://localhost:3000 if you are running the project locally
+AUTH_42_SCHOOL_CLIENT_ID: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
+AUTH_42_SCHOOL_CLIENT_SECRET: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
+AUTH_SECRET: http://localhost:3000 if you are running the project locally
 NEXTAUTH_SECRET: any random string
 ```
 
