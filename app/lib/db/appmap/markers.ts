@@ -5,7 +5,6 @@
  */
 "use server";
 
-import { getServerSession } from "next-auth";
 import { SAResponse } from "../types";
 import {
   CreateMarkerSchema,
@@ -13,10 +12,10 @@ import {
   TCreateMarker,
   TMarker,
 } from "./schemas";
-import { authOptions } from "@/lib/auth/auth-options";
 import { getDb } from "../db";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
+import { auth } from "@/auth";
 
 export async function createMarker(
   data: TCreateMarker
@@ -25,7 +24,7 @@ export async function createMarker(
   if (!parsed.success) {
     return { data: null, error: "invalid data" };
   }
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
