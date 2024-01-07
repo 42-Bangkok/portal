@@ -90,7 +90,7 @@ export async function getMarkers(amt: number): Promise<TMarker[]> {
 }
 
 export async function deleteMarker(id: string): Promise<SAResponse<boolean>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
