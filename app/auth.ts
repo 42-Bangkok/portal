@@ -2,8 +2,7 @@
  * NextAuth's config options
  * @see https://authjs.dev/guides/
  */
-import NextAuth, { Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import NextAuth from "next-auth";
 import FortyTwoProvider from "next-auth/providers/42-school";
 
 export const {
@@ -29,8 +28,7 @@ export const {
       }
       return token;
     },
-    // @ts-ignore disables ts warning for session
-    async session({ session, token }: { session: Session; token: JWT }) {
+    async session({ session, token }) {
       session.user = {
         ...session.user,
         login: token.user.login,
