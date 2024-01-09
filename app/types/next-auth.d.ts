@@ -19,7 +19,8 @@ declare module "next-auth" {
   interface Profile extends FortyTwoProfile {}
 }
 
-declare module "next-auth/jwt" {
+// https://github.com/nextauthjs/next-auth/discussions/8945#discussioncomment-7799831
+declare module "@auth/core/jwt" {
   interface JWT {
     user: {
       login: string;
