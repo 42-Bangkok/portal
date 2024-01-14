@@ -1,3 +1,27 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "prefer-const": "error",
+    "arrow-parens": ["error", "always"],
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off",
+    "no-whitespace-before-property": "error",
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": true
+      }
+    ]
+  }
 }
