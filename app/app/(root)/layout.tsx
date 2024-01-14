@@ -17,15 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>
+    <Providers>
+      <html lang="en">
+        <body className={inter.className}>
           <nav>
             <NavBar />
           </nav>
           {children}
-        </Providers>
-      </body>
-    </html>
+        </body>
+      </html>
+    </Providers>
   );
 }
