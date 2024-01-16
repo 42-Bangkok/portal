@@ -9,7 +9,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { deleteMarker } from "@/lib/db/appmap/markers";
 import { XIcon } from "lucide-react";
@@ -19,7 +19,7 @@ import { useMapStore } from "../../map/stores";
 export function DeleteMarkerDialog({ id }: { id: string }) {
   const [markers, setMarkers] = useMapStore((state) => [
     state.markers,
-    state.setMarkers,
+    state.setMarkers
   ]);
   const handleDelete = async () => {
     const { data, error } = await deleteMarker(id);

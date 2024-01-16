@@ -7,13 +7,13 @@ import FortyTwoProvider from "next-auth/providers/42-school";
 
 export const {
   handlers: { GET, POST },
-  auth,
+  auth
 } = NextAuth({
   providers: [
     FortyTwoProvider({
       clientId: process.env.AUTH_42_SCHOOL_CLIENT_ID,
-      clientSecret: process.env.AUTH_42_SCHOOL_CLIENT_SECRET,
-    }),
+      clientSecret: process.env.AUTH_42_SCHOOL_CLIENT_SECRET
+    })
   ],
   callbacks: {
     async jwt({ token, trigger, profile }) {
@@ -22,8 +22,8 @@ export const {
           ...token,
           user: {
             login: profile.login,
-            isStaff: profile["staff?"],
-          },
+            isStaff: profile["staff?"]
+          }
         };
       }
       return token;
@@ -32,9 +32,9 @@ export const {
       session.user = {
         ...session.user,
         login: token.user.login,
-        isStaff: token.user.isStaff,
+        isStaff: token.user.isStaff
       };
       return session;
-    },
-  },
+    }
+  }
 });

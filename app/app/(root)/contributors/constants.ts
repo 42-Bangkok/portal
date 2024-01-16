@@ -19,8 +19,8 @@ export const CONTRIBUTORS = [
     specialization: "Python, NodeJS, NextJS, Django, and things in between",
     socials: {
       github: "https://github.com/Lodimup",
-      linkedin: "https://www.linkedin.com/in/pumidol-l-736020128",
-    },
+      linkedin: "https://www.linkedin.com/in/pumidol-l-736020128"
+    }
   },
   {
     login: "krchuaip",
@@ -29,11 +29,12 @@ export const CONTRIBUTORS = [
     last_name: "Chuaiphikroh",
     profile_pic: "",
     description: "IT at 42 Bangkok.",
-    specialization: "Embedded System Engineer, Datacenter Engineer, Kernel Developer, specializes in C, ASM, GoLang, and Rust.",
+    specialization:
+      "Embedded System Engineer, Datacenter Engineer, Kernel Developer, specializes in C, ASM, GoLang, and Rust.",
     socials: {
       github: "https://github.com/kcp2p",
-      linkedin: "",
-    },
+      linkedin: ""
+    }
   },
   {
     login: "pngamcha",
@@ -45,8 +46,8 @@ export const CONTRIBUTORS = [
     specialization: "NodeJS, NextJS, Angular2 and mess up other's works",
     socials: {
       github: "https://github.com/greatng",
-      linkedin: "https://www.linkedin.com/in/paphawit",
-    },
+      linkedin: "https://www.linkedin.com/in/paphawit"
+    }
   },
   {
     login: "dummy-2",
@@ -58,7 +59,7 @@ export const CONTRIBUTORS = [
     specialization: "Python, NodeJS, NextJS, Django, and things in between",
     socials: {
       github: "https://github.com/Lodimup",
-      linkedin: "https://www.linkedin.com/in/pumidol-l-736020128",
-    },
-  },
+      linkedin: "https://www.linkedin.com/in/pumidol-l-736020128"
+    }
+  }
 ];
