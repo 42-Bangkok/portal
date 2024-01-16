@@ -1,10 +1,10 @@
-import { Metadata } from "next"
-import { AuthBtn } from "@/components/btns/auth-btn"
+import { Metadata } from "next";
+import { AuthBtn } from "@/components/btns/auth-btn";
 
 export const metadata: Metadata = {
   title: "Login",
-  description: "Login to your account",
-}
+  description: "Login to your account"
+};
 
 export default function Page() {
   return (
@@ -18,7 +18,8 @@ export default function Page() {
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;Debugging is like being a detective in a crime movie where you&apos;re also the murderer.&rdquo;
+                &ldquo;Debugging is like being a detective in a crime movie
+                where you&apos;re also the murderer.&rdquo;
               </p>
               <footer className="text-sm">Hackerman</footer>
             </blockquote>
@@ -27,17 +28,15 @@ export default function Page() {
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                Sign In
-              </h1>
+              <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
               <p className="text-sm text-muted-foreground">
                 Sign in to your 42 intra account to continue.
               </p>
-            <AuthBtn callbackUrl="/" />
+              <AuthBtn callbackUrl="/" />
             </div>
           </div>
         </div>
       </div>
     </main>
-  )
+  );
 }

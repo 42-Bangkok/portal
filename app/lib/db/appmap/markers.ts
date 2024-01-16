@@ -10,7 +10,7 @@ import {
   CreateMarkerSchema,
   MarkerSchema,
   TCreateMarker,
-  TMarker,
+  TMarker
 } from "./schemas";
 import { getDb } from "../db";
 import { revalidatePath } from "next/cache";
@@ -33,12 +33,12 @@ export async function createMarker(
     description: parsed.data.description,
     position: {
       type: "Point",
-      coordinates: [parsed.data.lng, parsed.data.lat],
+      coordinates: [parsed.data.lng, parsed.data.lat]
     },
     createdBy: session.user.login,
     updatedBy: session.user.login,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   const db = await getDb();
   const res = await db.collection("markers").insertOne(payload);
@@ -57,9 +57,9 @@ export async function createMarker(
       createdBy: session.user.login,
       updatedBy: session.user.login,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     }),
-    error: null,
+    error: null
   };
 }
 
@@ -82,7 +82,7 @@ export async function getMarkers(amt: number): Promise<TMarker[]> {
       createdBy: marker.createdBy,
       updatedBy: marker.updatedBy,
       createdAt: marker.createdAt,
-      updatedAt: marker.updatedAt,
+      updatedAt: marker.updatedAt
     });
     return _;
   });

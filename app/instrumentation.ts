@@ -12,7 +12,7 @@ function envManager() {
     "AUTH_42_SCHOOL_CLIENT_SECRET",
     "AUTH_URL",
     "AUTH_SECRET",
-    "MONGODB_URI",
+    "MONGODB_URI"
   ];
   let errs: any[] = [];
   ENVS.forEach((env) => {

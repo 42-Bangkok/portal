@@ -11,14 +11,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  FormLabel
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useMapStore } from "../map/stores";
@@ -36,7 +36,7 @@ import { FormSchema, TFormSchema } from "./schemas";
 export function NewMarkerDialog() {
   const [markers, setMarkers] = useMapStore((state) => [
     state.markers,
-    state.setMarkers,
+    state.setMarkers
   ]);
   const [position] = useMapStore((state) => [state.position]);
   const [open, setOpen] = useState(false);
@@ -45,8 +45,8 @@ export function NewMarkerDialog() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
-      description: "",
-    },
+      description: ""
+    }
   });
 
   const handleSubmit = async (e: TFormSchema) => {
@@ -55,7 +55,7 @@ export function NewMarkerDialog() {
       title: e.title,
       description: e.description,
       lat: position[0],
-      lng: position[1],
+      lng: position[1]
     });
     if (data) {
       toast.success("Successfully created a new marker!");

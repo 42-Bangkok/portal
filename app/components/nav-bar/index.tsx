@@ -11,7 +11,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
 import { AuthBtn } from "../btns/auth-btn";
@@ -28,20 +28,20 @@ const components: {
     title: "Map",
     href: "/map",
     target: "_blank",
-    description: "What's around 42 Bangkok?",
+    description: "What's around 42 Bangkok?"
   },
   {
     title: "Who's on site?",
     href: "/who-s-on-site",
     target: "_self",
-    description: "Check if your friend is on site",
+    description: "Check if your friend is on site"
   },
   {
     title: "My Resume",
     href: "/resume",
     target: "_self",
-    description: "Your public resume",
-  },
+    description: "Your public resume"
+  }
 ];
 
 const ABOUTS: {
@@ -54,8 +54,8 @@ const ABOUTS: {
     title: "Contributors",
     href: "/contributors",
     target: "",
-    description: "Contributors",
-  },
+    description: "Contributors"
+  }
 ];
 
 const no_renders = ["/login"];
