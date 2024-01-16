@@ -56,11 +56,12 @@ export const CONTRIBUTORS = [
     last_name: "Liangsoonthornsit",
     profile_pic: "",
     description: "FullstackOverflow Developer",
-    specialization: "C, C++, Python, NodeJS, NextJS, Django ... This list is incomplete; You Can Help By Expanding It :)",
+    specialization:
+      "C, C++, Python, NodeJS, NextJS, Django ... This list is incomplete; You Can Help By Expanding It :)",
     socials: {
       github: "https://github.com/hazamashoken",
-      linkedin: "https://www.linkedin.com/in/thanapol-liangsoonthornsit",
-    },
+      linkedin: "https://www.linkedin.com/in/thanapol-liangsoonthornsit"
+    }
   },
   {
     login: "dummy-2",

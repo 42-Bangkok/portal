@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 import { SAResponse } from "../types";
 import {
   TProfileSettingFormSchema,
-  profileSettingFormSchema,
+  profileSettingFormSchema
 } from "@/app/(root)/profile/setting/_components/profile-setting-form/schema";
 
 /**

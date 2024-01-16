@@ -15,7 +15,7 @@ import { FieldConfig } from "./types";
 import {
   ZodObjectOrWrapped,
   getDefaultValues,
-  getObjectFormSchema,
+  getObjectFormSchema
 } from "./utils";
 import AutoFormObject from "./fields/object";
 
@@ -31,7 +31,7 @@ function AutoForm<SchemaType extends ZodObjectOrWrapped>({
   onSubmit: onSubmitProp,
   fieldConfig,
   children,
-  className,
+  className
 }: {
   formSchema: SchemaType;
   values?: Partial<z.infer<SchemaType>>;
@@ -49,7 +49,7 @@ function AutoForm<SchemaType extends ZodObjectOrWrapped>({
   const form = useForm<z.infer<typeof objectFormSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
-    values: valuesProp,
+    values: valuesProp
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {

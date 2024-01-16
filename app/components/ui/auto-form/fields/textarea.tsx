@@ -3,7 +3,7 @@ import {
   FormDescription,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "../../form";
 import { Textarea } from "../../textarea";
 import { AutoFormInputComponentProps } from "../types";
@@ -12,7 +12,7 @@ export default function AutoFormTextarea({
   label,
   isRequired,
   fieldConfigItem,
-  fieldProps,
+  fieldProps
 }: AutoFormInputComponentProps) {
   const { showLabel: _showLabel, ...fieldPropsWithoutShowLabel } = fieldProps;
   const showLabel = _showLabel === undefined ? true : _showLabel;
