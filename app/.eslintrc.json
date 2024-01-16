@@ -6,6 +6,7 @@
     "prettier"
   ],
   "rules": {
+    "prettier/prettier": "warn",
     "prefer-const": "error",
     "arrow-parens": ["error", "always"],
     "no-console": "warn",
