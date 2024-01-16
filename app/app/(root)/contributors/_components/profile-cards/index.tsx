@@ -1,4 +1,4 @@
-import { CONTRIBUTORS } from "../../contants";
+import { CONTRIBUTORS } from "../../constants";
 import { ProfileCard } from "../profile-card";
 
 export const ProfileCards = () => {
@@ -10,7 +10,7 @@ export const ProfileCards = () => {
           This project is made possible by the following contributors.
         </p>
       </div>
-      <div className="grid md:grid-cols-3 gap-4 justify-items-center">
+      <div className="grid gap-4 md:grid-cols-3 justify-items-center">
         {CONTRIBUTORS.map((contributor) => (
           <ProfileCard key={contributor.login} {...contributor} />
         ))}
