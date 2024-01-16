@@ -5,13 +5,13 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
+  AccordionTrigger
 } from "../../accordion";
 import {
   beautifyObjectName,
   getBaseSchema,
   getBaseType,
-  zodToHtmlInputProps,
+  zodToHtmlInputProps
 } from "../utils";
 import { FormField } from "../../form";
 import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from "../config";
@@ -22,12 +22,12 @@ function DefaultParent({ children }: { children: React.ReactNode }) {
 }
 
 export default function AutoFormObject<
-  SchemaType extends z.ZodObject<any, any>,
+  SchemaType extends z.ZodObject<any, any>
 >({
   schema,
   form,
   fieldConfig,
-  path = [],
+  path = []
 }: {
   schema: SchemaType | z.ZodEffects<SchemaType>;
   form: ReturnType<typeof useForm>;
@@ -116,7 +116,7 @@ export default function AutoFormObject<
                       ...fieldConfigItem.inputProps,
                       value: !fieldConfigItem.inputProps?.defaultValue
                         ? field.value ?? ""
-                        : undefined,
+                        : undefined
                     }}
                   />
                 </ParentElement>

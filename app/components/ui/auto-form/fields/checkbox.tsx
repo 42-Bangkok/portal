@@ -7,7 +7,7 @@ export default function AutoFormCheckbox({
   isRequired,
   field,
   fieldConfigItem,
-  fieldProps,
+  fieldProps
 }: AutoFormInputComponentProps) {
   return (
     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">

@@ -14,7 +14,7 @@ export default async function Page() {
     throw new Error(error);
   }
   const profileSettingFormProps = {
-    values: profileSetting!,
+    values: profileSetting!
   };
   return (
     <main className="flex flex-col gap-4">

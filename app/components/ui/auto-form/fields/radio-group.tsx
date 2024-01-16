@@ -8,7 +8,7 @@ export default function AutoFormRadioGroup({
   isRequired,
   field,
   zodItem,
-  fieldProps,
+  fieldProps
 }: AutoFormInputComponentProps) {
   const values = (zodItem as unknown as z.ZodEnum<any>)._def.values;
 

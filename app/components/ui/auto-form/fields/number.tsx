@@ -9,7 +9,7 @@ export default function AutoFormNumber({
     <AutoFormInput
       fieldProps={{
         type: "number",
-        ...fieldProps,
+        ...fieldProps
       }}
       {...props}
     />

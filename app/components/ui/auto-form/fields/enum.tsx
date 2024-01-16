@@ -3,14 +3,14 @@ import {
   FormDescription,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "../../form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "../../select";
 import { AutoFormInputComponentProps } from "../types";
 import { getBaseSchema } from "../utils";
@@ -21,7 +21,7 @@ export default function AutoFormEnum({
   isRequired,
   field,
   fieldConfigItem,
-  zodItem,
+  zodItem
 }: AutoFormInputComponentProps) {
   const baseValues = (getBaseSchema(zodItem) as unknown as z.ZodEnum<any>)._def
     .values;

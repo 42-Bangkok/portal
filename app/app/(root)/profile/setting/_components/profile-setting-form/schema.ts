@@ -5,7 +5,7 @@ export const profileSettingFormSchema = z.object({
     .boolean()
     .default(false)
     .optional()
-    .describe("Set resume public"),
+    .describe("Set resume public")
 });
 
 export type TProfileSettingFormSchema = z.infer<

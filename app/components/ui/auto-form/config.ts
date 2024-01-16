@@ -15,7 +15,7 @@ export const INPUT_COMPONENTS = {
   switch: AutoFormSwitch,
   textarea: AutoFormTextarea,
   number: AutoFormNumber,
-  fallback: AutoFormInput,
+  fallback: AutoFormInput
 };
 
 /**
@@ -29,5 +29,5 @@ export const DEFAULT_ZOD_HANDLERS: {
   ZodDate: "date",
   ZodEnum: "select",
   ZodNativeEnum: "select",
-  ZodNumber: "number",
+  ZodNumber: "number"
 };

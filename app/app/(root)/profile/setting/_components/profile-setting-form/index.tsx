@@ -22,8 +22,8 @@ export const ProfileSettingForm = (props: IProfileSettingForm) => {
       fieldConfig={{
         is_resume_public: {
           fieldType: "switch",
-          description: "Allow others to see your resume",
-        },
+          description: "Allow others to see your resume"
+        }
       }}
     >
       <AutoFormSubmit>Submit</AutoFormSubmit>

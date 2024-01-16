@@ -4,7 +4,7 @@ import {
   FormDescription,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "../../form";
 import { AutoFormInputComponentProps } from "../types";
 
@@ -13,7 +13,7 @@ export default function AutoFormDate({
   isRequired,
   field,
   fieldConfigItem,
-  fieldProps,
+  fieldProps
 }: AutoFormInputComponentProps) {
   return (
     <FormItem>

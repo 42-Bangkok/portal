@@ -4,30 +4,30 @@ import { beautifyObjectName } from "../utils";
 import {
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
+  AccordionTrigger
 } from "../../accordion";
 import AutoFormObject from "./object";
 import { Button } from "../../button";
 import { Plus, Trash } from "lucide-react";
 import { Separator } from "../../separator";
-import { FieldConfig } from '../types';
+import { FieldConfig } from "../types";
 
 export default function AutoFormArray({
   name,
   item,
   form,
   path = [],
-  fieldConfig,
+  fieldConfig
 }: {
   name: string;
   item: z.ZodArray<any>;
   form: ReturnType<typeof useForm>;
   path?: string[];
-  fieldConfig?: any
+  fieldConfig?: any;
 }) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name,
+    name
   });
   const title = item._def.description ?? beautifyObjectName(name);
 
