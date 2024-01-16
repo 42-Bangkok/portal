@@ -36,6 +36,19 @@ export const CONTRIBUTORS = [
     },
   },
   {
+    login: "pngamcha",
+    first_name: "Paphawit",
+    middle_name: "",
+    last_name: "Ngamchaliew",
+    profile_pic: "",
+    description: "Turn beer into code machine",
+    specialization: "NodeJS, NextJS, Angular2 and mess up other's works",
+    socials: {
+      github: "https://github.com/greatng",
+      linkedin: "https://www.linkedin.com/in/paphawit",
+    },
+  },
+  {
     login: "dummy-2",
     first_name: "dummy",
     middle_name: "",
