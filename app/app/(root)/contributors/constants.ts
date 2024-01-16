@@ -49,6 +49,19 @@ export const CONTRIBUTORS = [
     },
   },
   {
+    login: "tliangso",
+    first_name: "Thanapol",
+    middle_name: "",
+    last_name: "Liangsoonthornsit",
+    profile_pic: "",
+    description: "FullstackOverflow Developer",
+    specialization: "C, C++, Python, NodeJS, NextJS, Django ... This list is incomplete; You Can Help By Expanding It :)",
+    socials: {
+      github: "https://github.com/hazamashoken",
+      linkedin: "https://www.linkedin.com/in/thanapol-liangsoonthornsit",
+    },
+  },
+  {
     login: "dummy-2",
     first_name: "dummy",
     middle_name: "",
