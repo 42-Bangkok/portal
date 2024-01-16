@@ -18,11 +18,11 @@ export const CreateMarkerSchema = z.object({
   title: z.string(),
   description: z.string(),
   lat: z.number().refine((value) => value >= -90 && value <= 90, {
-    message: "Latitude must be between -90 and 90",
+    message: "Latitude must be between -90 and 90"
   }),
   lng: z.number().refine((value) => value >= -180 && value <= 180, {
-    message: "Longitude must be between -180 and 180",
-  }),
+    message: "Longitude must be between -180 and 180"
+  })
 });
 
 export const UpdateMarkerSchema = z.object({
@@ -32,21 +32,21 @@ export const UpdateMarkerSchema = z.object({
   lat: z
     .number()
     .refine((value) => value >= -90 && value <= 90, {
-      message: "Latitude must be between -90 and 90",
+      message: "Latitude must be between -90 and 90"
     })
     .optional(),
   lng: z
     .number()
     .refine((value) => value >= -180 && value <= 180, {
-      message: "Longitude must be between -180 and 180",
+      message: "Longitude must be between -180 and 180"
     })
     .optional(),
   featured: z.boolean().optional(),
-  updatedBy: z.string(),
+  updatedBy: z.string()
 });
 
 export const DeleteMarkerSchema = z.object({
-  _id: z.string(),
+  _id: z.string()
 });
 
 /** when a new field is added, a new default must also be added here */
@@ -56,7 +56,7 @@ export const MarkerSchema = CreateMarkerSchema.extend({
   createdBy: z.string(),
   updatedBy: z.string(),
   createdAt: z.string(),
-  updatedAt: z.string(),
+  updatedAt: z.string()
 });
 
 export type TCreateMarker = z.infer<typeof CreateMarkerSchema>;

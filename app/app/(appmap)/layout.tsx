@@ -8,11 +8,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Map",
-  description: "What&apos;s around campus?",
+  description: "What&apos;s around campus?"
 };
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {

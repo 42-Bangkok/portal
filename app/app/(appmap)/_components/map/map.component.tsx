@@ -17,14 +17,14 @@ const Map = (props: TMap) => {
   const [setPosition, markers, setMarkers] = useMapStore((state) => [
     state.setPosition,
     state.markers,
-    state.setMarkers,
+    state.setMarkers
   ]);
   const MapHandler = () => {
     const map = useMapEvents({
       move: () => {
         const { lat, lng } = map.getCenter();
         setPosition([lat, lng]);
-      },
+      }
     });
     return null;
   };
@@ -37,7 +37,7 @@ const Map = (props: TMap) => {
       <MapContainer
         style={{
           height: "100%",
-          width: "100%",
+          width: "100%"
         }}
         center={initialPosition}
         zoom={initialZoom}

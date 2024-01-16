@@ -20,5 +20,5 @@ export const useMapStore = create<State & Action>((set) => ({
   position: FT_BKK_LOC,
   markers: [],
   setPosition: (position) => set({ position }),
-  setMarkers: (markers) => set({ markers }),
+  setMarkers: (markers) => set({ markers })
 }));
