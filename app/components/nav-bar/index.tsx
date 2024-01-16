@@ -112,8 +112,8 @@ export function NavBar() {
                     </a>
                   </NavigationMenuLink>
                 </li>
-                <ListItem href="/" title="sub-menu-1">
-                  Re-usable components built using Radix UI and Tailwind CSS.
+                <ListItem href="/profile/setting" title="Settings">
+                  Configure your portal settings.
                 </ListItem>
                 <ListItem href="/" title="sub-menu-1">
                   How to install dependencies and structure your app.
