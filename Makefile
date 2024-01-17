@@ -10,26 +10,26 @@ all:
 	\tre\t\trebuild production version"
 
 install:
-	@npm install
+	@cd app && npm install
 
 dev:
-	@npm run dev
+	@cd app && npm run dev
 
 build:
-	@npm run build
+	@cd app && npm run build
 
 start: build
-	@npm run start
+	@cd app && npm run start
 
 clean:
-	@rm -rf .next
+	@cd app && rm -rf .next
 
 fclean: clean
 	# ask for confirmation
 	@echo "This will remove all dependencies, are you sure? [y/N]"
 	@read -r answer; \
 	if [ "$$answer" = "y" ] || [ "$$answer" = "Y" ]; then \
-		rm -rf node_modules; \
+		cd app && rm -rf node_modules; \
 	fi
 
 re: clean build
