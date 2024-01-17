@@ -15,7 +15,7 @@ export const MiniMarker = (props: TMiniMarker) => {
       iconOptions={{
         className: "center-marker",
         iconSize: [250, 50],
-        iconAnchor: [125, 25],
+        iconAnchor: [125, 25]
       }}
     >
       <Card className="w-[250px] h-[50px] p-1 rounded-l-full rounded-r-full shadow-lg">

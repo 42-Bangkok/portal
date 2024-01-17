@@ -6,6 +6,12 @@ https://portal.42bangkok.com is a web service diligently maintained by the cadet
 
 Welcome to our open-source project! We appreciate your interest in contributing. Before you start, please take a moment to read through this guide to understand how you can contribute effectively.
 
+# About using MongoDB
+Currently, Portal's database layer works like this  
+DB Layer: zod validates -> db calls -> zod validates + add defaults  
+It results in a type safe environment, but it is far from ideal. DB layer will more gets complex overtime.
+We use MongoDB with zod because we aim to make the project's barrier to entry as low as possible, while still in an acceptable coding pattern. For more advanced users, we recommend Prisma, Drizzle, TypeORM, or a proper backend like NestJS, or Django.
+
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
@@ -32,9 +38,9 @@ To get started with contributing, you'll need to follow these steps:
 3. Create a `.env.local` file in the root directory of the project and add the following environment variables:
 
 ```
-FORTY_TWO_CLIENT_ID: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
-FORTY_TWO_CLIENT_SECRET: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
-NEXTAUTH_URL: http://localhost:3000 if you are running the project locally
+AUTH_42_SCHOOL_CLIENT_ID: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
+AUTH_42_SCHOOL_CLIENT_SECRET: from your intra.42.fr API (https://profile.intra.42.fr/oauth/applications)
+AUTH_SECRET: http://localhost:3000 if you are running the project locally
 NEXTAUTH_SECRET: any random string
 ```
 

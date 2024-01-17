@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { Map } from "../_components/map";
 import { MapDashboard } from "../_components/map-dashboard";
 
+export const dynamic = 'force-dynamic'
+
 export default function Page() {
   return (
     <main>

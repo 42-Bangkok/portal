@@ -1,0 +1,6 @@
+#ignore 
+.devcontainer
+.github
+.vscode
+README.md
+Dockerfile

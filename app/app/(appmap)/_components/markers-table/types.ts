@@ -1,5 +1,5 @@
-import { TColumn } from "./columns"
+import { TColumn } from "./columns";
 
 export type TMarkersTable = {
-  data: TColumn[]
-}
+  data: TColumn[];
+};

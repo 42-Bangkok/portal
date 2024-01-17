@@ -8,7 +8,7 @@ import { FT_BKK_LOC } from "../../constants";
 
 const DynamicMap = dynamic(() => import("./map.component"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <p>Loading...</p>
 });
 
 export const Map = async () => {
@@ -16,7 +16,7 @@ export const Map = async () => {
   const props = {
     initialPosition: FT_BKK_LOC,
     initialZoom: 17,
-    markers: markers,
+    markers: markers
   };
   return <DynamicMap {...props} />;
 };
