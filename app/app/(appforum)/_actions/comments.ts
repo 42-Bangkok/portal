@@ -34,33 +34,16 @@
  */
 "use server";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../..//auth/auth-options";
-import { getDb } from "../db";
+import { auth } from "@/auth";
+import { getDb } from "../../../lib/db/db";
 import { ObjectId } from "mongodb";
-import z from "zod";
-import { SAResponse } from "../types";
-
-export const CreateCommentSchema = z.object({
-  content: z.string(),
-  isAnonymous: z.boolean().optional(),
-});
-
-export const UpdateCommentSchema = z.object({
-  content: z.string().optional(),
-});
-
-export const CommentSchema = CreateCommentSchema.extend({
-  id: z.string(),
-  createdBy: z.string(),
-  updatedBy: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
-
-export type TCreateComment = z.infer<typeof CreateCommentSchema>;
-export type TUpdateComment = z.infer<typeof UpdateCommentSchema>;
-export type TComment = z.infer<typeof CommentSchema>;
+import { SAResponse } from "../../../lib/db/types";
+import {
+  TCreateComment,
+  TComment,
+  CommentSchema,
+  TUpdateComment
+} from "./schema";
 
 const COLLECTION_NAME = "appforum-comments";
 
@@ -68,7 +51,7 @@ export async function createComment(
   postId: string,
   data: TCreateComment
 ): Promise<SAResponse<TComment>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -80,7 +63,7 @@ export async function createComment(
     createdBy: session.user.login,
     updatedBy: session.user.login,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   const db = await getDb();
   const res = await db.collection(COLLECTION_NAME).insertOne(payload);
@@ -95,9 +78,9 @@ export async function createComment(
       createdBy: session.user.login,
       updatedBy: session.user.login,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     }),
-    error: null,
+    error: null
   };
 }
 
@@ -105,7 +88,7 @@ export async function getComments(
   postId: string,
   amt: number
 ): Promise<SAResponse<null> | TComment[]> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -130,7 +113,7 @@ export async function getComments(
           ? comment.updatedBy
           : "Anonymous",
       createdAt: comment.createdAt,
-      updatedAt: comment.updatedAt,
+      updatedAt: comment.updatedAt
     });
     return _;
   });
@@ -138,7 +121,7 @@ export async function getComments(
 }
 
 export async function deleteComment(id: string): Promise<SAResponse<boolean>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -165,8 +148,8 @@ export async function deleteComment(id: string): Promise<SAResponse<boolean>> {
       {
         $set: {
           isActive: false,
-          updatedBy: session.user.login,
-        },
+          updatedBy: session.user.login
+        }
       }
     );
     if (!res.acknowledged) {
@@ -180,7 +163,7 @@ export async function updateComment(
   id: string,
   data: TUpdateComment
 ): Promise<SAResponse<TComment>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -200,8 +183,8 @@ export async function updateComment(
       $set: {
         content: data.content,
         updatedBy: session.user.login,
-        updatedAt: new Date().toISOString(),
-      },
+        updatedAt: new Date().toISOString()
+      }
     }
   );
   if (!res.acknowledged) {
@@ -220,8 +203,8 @@ export async function updateComment(
           ? comment.updatedBy
           : "Anonymous",
       createdAt: comment.createdAt,
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     }),
-    error: null,
+    error: null
   };
 }

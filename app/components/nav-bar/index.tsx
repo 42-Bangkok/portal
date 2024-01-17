@@ -30,17 +30,23 @@ const components: {
     target: "_blank",
     description: "What's around 42 Bangkok?"
   },
-  {
-    title: "Who's on site?",
-    href: "/who-s-on-site",
-    target: "_self",
-    description: "Check if your friend is on site"
-  },
+  // {
+  //   title: "Who's on site?",
+  //   href: "/who-s-on-site",
+  //   target: "_self",
+  //   description: "Check if your friend is on site"
+  // },
   {
     title: "My Resume",
     href: "/resume",
     target: "_self",
     description: "Your public resume"
+  },
+  {
+    title: "Forum",
+    href: "/forum",
+    target: "_self",
+    description: "Where the chaos happens"
   }
 ];
 

@@ -39,44 +39,18 @@
  */
 "use server";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth/auth-options";
-import { getDb } from "../db";
+import { auth } from "@/auth";
+import { getDb } from "@/lib/db/db";
 import { ObjectId } from "mongodb";
-import z from "zod";
-import { SAResponse } from "../types";
-
-export const CreatePostSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  tags: z.array(z.string()),
-  isAnonymous: z.boolean().optional(),
-});
-
-export const UpdatePostSchema = z.object({
-  title: z.string().optional(),
-  content: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-});
-
-export const PostSchema = CreatePostSchema.extend({
-  id: z.string(),
-  createdBy: z.string(),
-  updatedBy: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
-
-export type TCreatePost = z.infer<typeof CreatePostSchema>;
-export type TUpdatePost = z.infer<typeof UpdatePostSchema>;
-export type TPost = z.infer<typeof PostSchema>;
+import { SAResponse, TPagination } from "@/lib/db/types";
+import { TCreatePost, TPost, TUpdatePost } from "./schema";
 
 const COLLECTION_NAME = "appforum-posts";
 
 export async function createPost(
   data: TCreatePost
 ): Promise<SAResponse<TPost>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -90,7 +64,7 @@ export async function createPost(
     createdBy: session.user.login,
     updatedBy: session.user.login,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   const db = await getDb();
   const res = await db.collection(COLLECTION_NAME).insertOne(payload);
@@ -107,14 +81,14 @@ export async function createPost(
       createdBy: session.user.login,
       updatedBy: session.user.login,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     },
-    error: null,
+    error: null
   };
 }
 
 export async function getPost(id: string): Promise<SAResponse<TPost>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -140,16 +114,110 @@ export async function getPost(id: string): Promise<SAResponse<TPost>> {
           ? res.updatedBy
           : "Anonymous",
       createdAt: res.createdAt,
-      updatedAt: res.updatedAt,
+      updatedAt: res.updatedAt
     },
-    error: null,
+    error: null
   };
 }
 
+export async function getPagePosts(
+  title: string,
+  amt: number,
+  page: number
+): Promise<SAResponse<null | TPagination<TPost>>> {
+  const session = await auth();
+  if (!session) {
+    return { data: null, error: "not authenticated" };
+  }
+  const db = await getDb();
+  const res = await db
+    .collection("posts")
+    .find({ isActive: true, title: { $regex: title } })
+    .sort({ createdAt: -1 })
+    .skip(amt * page)
+    .limit(amt)
+    .toArray();
+  const posts = res.map((post) => {
+    return {
+      id: post._id.toHexString(),
+      title: post.title,
+      content: post.content,
+      tags: post.tags,
+      createdBy:
+        post.isAnoynomous && !(session.user.login == post.createdBy)
+          ? post.createdBy
+          : "Anonymous",
+      updatedBy:
+        post.isAnoynomous && !(session.user.login == post.createdBy)
+          ? post.updatedBy
+          : "Anonymous",
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt
+    };
+  });
+
+  const total_page = (await db.collection("posts").countDocuments()) / amt;
+
+  return {
+    data: {
+      items: posts,
+      total_page
+    },
+    error: null
+  };
+}
+
+// export async function getPagePosts(
+//   amt: number,
+//   page: number
+// ): Promise<SAResponse<null | TPagination<TPost>>> {
+//   const session = await auth();
+//   if (!session) {
+//     return { data: null, error: "not authenticated" };
+//   }
+//   const db = await getDb();
+//   const res = await db
+//     .collection("posts")
+//     .find({ isActive: true })
+//     .sort({ createdAt: -1 })
+//     .skip(amt * page)
+//     .limit(amt)
+//     .toArray();
+//   const posts = res.map((post) => {
+//     return {
+//       id: post._id.toHexString(),
+//       title: post.title,
+//       content: post.content,
+//       tags: post.tags,
+//       isAnonymous: post.isAnonymous || false,
+//       createdBy:
+//         post.isAnoynomous && !(session.user.login == post.createdBy)
+//           ? post.createdBy
+//           : "Anonymous",
+//       updatedBy:
+//         post.isAnoynomous && !(session.user.login == post.createdBy)
+//           ? post.updatedBy
+//           : "Anonymous",
+//       createdAt: post.createdAt,
+//       updatedAt: post.updatedAt
+//     };
+//   });
+
+//   const total_page = (await db.collection("posts").countDocuments()) / amt;
+
+//   return {
+//     data: {
+//       items: posts,
+//       total_page
+//     },
+//     error: null
+//   };
+// }
+
 export async function getPosts(
   amt: number
-): Promise<SAResponse<null> | TPost[]> {
-  const session = await getServerSession(authOptions);
+): Promise<SAResponse<null | TPagination<TPost>>> {
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -175,14 +243,22 @@ export async function getPosts(
           ? post.updatedBy
           : "Anonymous",
       createdAt: post.createdAt,
-      updatedAt: post.updatedAt,
+      updatedAt: post.updatedAt
     };
   });
-  return posts;
+
+  const total_page = (await db.collection("posts").countDocuments()) / amt;
+  return {
+    data: {
+      items: posts,
+      total_page
+    },
+    error: null
+  };
 }
 
 export async function deletePost(id: string): Promise<SAResponse<boolean>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -221,7 +297,7 @@ export async function updatePost(
   id: string,
   data: TUpdatePost
 ): Promise<SAResponse<TPost>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
@@ -242,7 +318,7 @@ export async function updatePost(
     content: data.content,
     tags: data.tags,
     updatedBy: session.user.login,
-    updatedAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   const res = await db
     .collection(COLLECTION_NAME)
@@ -265,8 +341,8 @@ export async function updatePost(
           ? post.updatedBy
           : "Anonymous",
       createdAt: post.createdAt,
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     },
-    error: null,
+    error: null
   };
 }
