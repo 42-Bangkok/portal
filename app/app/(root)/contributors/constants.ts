@@ -64,6 +64,19 @@ export const CONTRIBUTORS = [
     }
   },
   {
+    login: "tvikanai",
+    first_name: "Tuengdin",
+    middle_name: "",
+    last_name: "Vikanaiz",
+    profile_pic: "",
+    description: "Fullstack Bug Generator",
+    specialization: "C, NodeJS, NextJS, MDX, ...",
+    socials: {
+      github: "https://github.com/Tuengdin",
+      linkedin: "https://th.linkedin.com/in/tuengdin-vikanaiz-87764b133"
+    }
+  },
+  {
     login: "dummy-2",
     first_name: "dummy",
     middle_name: "",
