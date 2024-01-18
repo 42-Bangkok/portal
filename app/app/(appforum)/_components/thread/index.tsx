@@ -5,13 +5,13 @@ import { redirect } from "next/navigation";
 
 export const Thread = async (props: { page: number; search: string }) => {
   const { page, search } = props;
-  const { data, error } = await getPagePosts(search, 20, page);
+  const { data, error } =
+    search === "" ? await getPosts(20) : await getPagePosts(search, 20, page);
 
   if (!!error) throw error;
 
   if (data!.total_page < page && data!.total_page !== 0)
     redirect(`/forum?page=${data!.total_page}`);
-
   return <PostPagination {...data!} page={page} search={search} />;
 };
 

@@ -40,7 +40,7 @@ export const PostPagination = (
 
   return (
     <>
-      <div className="container">
+      <div className="container my-2 space-y-2">
         {items.map((post) => (
           <PostItem key={post.id} post={post} />
         ))}

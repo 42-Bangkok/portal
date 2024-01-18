@@ -44,12 +44,13 @@ import { getDb } from "@/lib/db/db";
 import { ObjectId } from "mongodb";
 import { SAResponse, TPagination } from "@/lib/db/types";
 import { TCreatePost, TPost, TUpdatePost } from "./schema";
+import { redirect } from "next/navigation";
 
 const COLLECTION_NAME = "appforum-posts";
 
 export async function createPost(
   data: TCreatePost
-): Promise<SAResponse<TPost>> {
+): Promise<SAResponse<boolean>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -71,20 +72,8 @@ export async function createPost(
   if (!res.acknowledged) {
     return { data: null, error: "failed to create post" };
   }
-  return {
-    data: {
-      id: res.insertedId.toHexString(),
-      title: data.title,
-      content: data.content,
-      tags: data.tags,
-      isAnonymous: data.isAnonymous || false,
-      createdBy: session.user.login,
-      updatedBy: session.user.login,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    },
-    error: null
-  };
+  const postHexId = res.insertedId.toHexString();
+  redirect(`/forum/${postHexId}`);
 }
 
 export async function getPost(id: string): Promise<SAResponse<TPost>> {
@@ -92,6 +81,11 @@ export async function getPost(id: string): Promise<SAResponse<TPost>> {
   if (!session) {
     return { data: null, error: "not authenticated" };
   }
+
+  if (ObjectId.isValid(id) === false) {
+    return { data: null, error: "invalid id" };
+  }
+
   const db = await getDb();
   const res = await db
     .collection(COLLECTION_NAME)
@@ -106,11 +100,11 @@ export async function getPost(id: string): Promise<SAResponse<TPost>> {
       content: res.content,
       tags: res.tags,
       createdBy:
-        res.isAnoynomous && !(session.user.login == res.createdBy)
+        !res.isAnoynomous && !(session.user.login == res.createdBy)
           ? res.createdBy
           : "Anonymous",
       updatedBy:
-        res.isAnoynomous && !(session.user.login == res.createdBy)
+        !res.isAnoynomous && !(session.user.login == res.createdBy)
           ? res.updatedBy
           : "Anonymous",
       createdAt: res.createdAt,
@@ -130,13 +124,15 @@ export async function getPagePosts(
     return { data: null, error: "not authenticated" };
   }
   const db = await getDb();
+  page -= 1;
   const res = await db
-    .collection("posts")
-    .find({ isActive: true, title: { $regex: title } })
+    .collection(COLLECTION_NAME)
+    .find({ isActive: true, title: { $regex: title, $options: "si" } })
     .sort({ createdAt: -1 })
     .skip(amt * page)
     .limit(amt)
     .toArray();
+  console.log(res);
   const posts = res.map((post) => {
     return {
       id: post._id.toHexString(),
@@ -144,11 +140,11 @@ export async function getPagePosts(
       content: post.content,
       tags: post.tags,
       createdBy:
-        post.isAnoynomous && !(session.user.login == post.createdBy)
+        !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.createdBy
           : "Anonymous",
       updatedBy:
-        post.isAnoynomous && !(session.user.login == post.createdBy)
+        !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.updatedBy
           : "Anonymous",
       createdAt: post.createdAt,
@@ -156,8 +152,9 @@ export async function getPagePosts(
     };
   });
 
-  const total_page = (await db.collection("posts").countDocuments()) / amt;
-
+  const total_page = Math.ceil(
+    (await db.collection(COLLECTION_NAME).countDocuments()) / amt
+  );
   return {
     data: {
       items: posts,
@@ -177,7 +174,7 @@ export async function getPagePosts(
 //   }
 //   const db = await getDb();
 //   const res = await db
-//     .collection("posts")
+//     .collection(COLLECTION_NAME)
 //     .find({ isActive: true })
 //     .sort({ createdAt: -1 })
 //     .skip(amt * page)
@@ -203,7 +200,7 @@ export async function getPagePosts(
 //     };
 //   });
 
-//   const total_page = (await db.collection("posts").countDocuments()) / amt;
+//   const total_page = (await db.collection(COLLECTION_NAME).countDocuments()) / amt;
 
 //   return {
 //     data: {
@@ -223,11 +220,12 @@ export async function getPosts(
   }
   const db = await getDb();
   const res = await db
-    .collection("posts")
+    .collection(COLLECTION_NAME)
     .find({ isActive: true })
     .sort({ createdAt: -1 })
     .limit(amt)
     .toArray();
+
   const posts = res.map((post) => {
     return {
       id: post._id.toHexString(),
@@ -235,11 +233,11 @@ export async function getPosts(
       content: post.content,
       tags: post.tags,
       createdBy:
-        post.isAnoynomous && !(session.user.login == post.createdBy)
+        !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.createdBy
           : "Anonymous",
       updatedBy:
-        post.isAnoynomous && !(session.user.login == post.createdBy)
+        !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.updatedBy
           : "Anonymous",
       createdAt: post.createdAt,
@@ -247,7 +245,10 @@ export async function getPosts(
     };
   });
 
-  const total_page = (await db.collection("posts").countDocuments()) / amt;
+  const total_page = Math.ceil(
+    (await db.collection(COLLECTION_NAME).countDocuments()) / amt
+  );
+
   return {
     data: {
       items: posts,
@@ -261,6 +262,9 @@ export async function deletePost(id: string): Promise<SAResponse<boolean>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
+  }
+  if (ObjectId.isValid(id) === false) {
+    return { data: null, error: "invalid id" };
   }
   const db = await getDb();
   const post = await db
@@ -333,11 +337,11 @@ export async function updatePost(
       content: data.content as string,
       tags: data.tags as string[],
       createdBy:
-        post.isAnoynomous && !(session.user.login == post.createdBy)
+        !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.createdBy
           : "Anonymous",
       updatedBy:
-        post.isAnoynomous && !(session.user.login == post.createdBy)
+        !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.updatedBy
           : "Anonymous",
       createdAt: post.createdAt,
