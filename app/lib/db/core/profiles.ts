@@ -1,6 +1,7 @@
 "use server";
 
 import { getDb } from "../db";
+import { COLLECTIONS } from "@/lib/db/collections";
 import { auth } from "@/auth";
 import { SAResponse } from "../types";
 import {
@@ -17,7 +18,9 @@ export async function getProfileSettings(
   login: string
 ): Promise<SAResponse<TProfileSettingFormSchema>> {
   const db = await getDb();
-  const res = await db.collection("profileSettings").findOne({ login: login });
+  const res = await db
+    .collection(COLLECTIONS.APPCORE_PROFILESETTINGS)
+    .findOne({ login: login });
   return { data: profileSettingFormSchema.parse(res), error: null };
 }
 
@@ -37,7 +40,7 @@ export async function putProfileSettings(
   const login = session.user.login;
   const db = await getDb();
   const res = await db
-    .collection("profileSettings")
+    .collection(COLLECTIONS.APPCORE_PROFILESETTINGS)
     .findOneAndUpdate(
       { login: login },
       { $set: { ...payload, login: login } },

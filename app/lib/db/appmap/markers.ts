@@ -13,6 +13,7 @@ import {
   TMarker
 } from "./schemas";
 import { getDb } from "../db";
+import { COLLECTIONS } from "@/lib/db/collections";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
 import { auth } from "@/auth";
@@ -41,7 +42,9 @@ export async function createMarker(
     updatedAt: new Date().toISOString()
   };
   const db = await getDb();
-  const res = await db.collection("markers").insertOne(payload);
+  const res = await db
+    .collection(COLLECTIONS.APPMAP_MARKERS)
+    .insertOne(payload);
   if (!res.acknowledged) {
     return { data: null, error: "failed to create marker" };
   }
@@ -66,7 +69,7 @@ export async function createMarker(
 export async function getMarkers(amt: number): Promise<TMarker[]> {
   const db = await getDb();
   const res = await db
-    .collection("markers")
+    .collection(COLLECTIONS.APPMAP_MARKERS)
     .find()
     .sort({ createdAt: -1 })
     .limit(amt)
@@ -96,7 +99,7 @@ export async function deleteMarker(id: string): Promise<SAResponse<boolean>> {
   }
   const db = await getDb();
   const marker = await db
-    .collection("markers")
+    .collection(COLLECTIONS.APPMAP_MARKERS)
     .findOne({ _id: new ObjectId(id) });
   if (!marker) {
     return { data: null, error: "marker not found" };
@@ -105,7 +108,7 @@ export async function deleteMarker(id: string): Promise<SAResponse<boolean>> {
     return { data: null, error: "not authorized" };
   }
   const res = await db
-    .collection("markers")
+    .collection(COLLECTIONS.APPMAP_MARKERS)
     .deleteOne({ _id: new ObjectId(id) });
   if (!res.acknowledged) {
     return { data: null, error: "failed to delete marker" };
