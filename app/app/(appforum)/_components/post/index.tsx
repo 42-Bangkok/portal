@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPost } from "@/app/(appforum)/_actions/posts";
+import { getPost } from "@/lib/db/appforum";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PostContent } from "./post-content";
 

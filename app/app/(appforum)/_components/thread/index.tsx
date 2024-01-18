@@ -1,12 +1,11 @@
-import { getPagePosts, getPosts } from "@/app/(appforum)/_actions/posts";
+import { getPagePosts, getPosts } from "@/lib/db/appforum";
 import { PostPagination } from "./thread-pagination";
 import { PostItem } from "./post-item";
 import { redirect } from "next/navigation";
 
 export const Thread = async (props: { page: number; search: string }) => {
   const { page, search } = props;
-  const { data, error } =
-    search === "" ? await getPosts(20) : await getPagePosts(search, 20, page);
+  const { data, error } = await getPagePosts(search, 20, page);
 
   if (!!error) throw error;
 

@@ -35,14 +35,16 @@
 "use server";
 
 import { auth } from "@/auth";
-import { getDb } from "../../../lib/db/db";
+import { getDb } from "@/lib/db/db";
 import { ObjectId } from "mongodb";
-import { SAResponse } from "../../../lib/db/types";
+import { SAResponse } from "@/lib/db/types";
 import {
-  TCreateComment,
-  TComment,
   CommentSchema,
-  TUpdateComment
+  CreateCommentSchema,
+  TComment,
+  TCreateComment,
+  TUpdateComment,
+  UpdateCommentSchema
 } from "./schema";
 
 const COLLECTION_NAME = "appforum-comments";
@@ -51,6 +53,10 @@ export async function createComment(
   postId: string,
   data: TCreateComment
 ): Promise<SAResponse<TComment>> {
+  if (!CreateCommentSchema.safeParse(data).success) {
+    return { data: null, error: "invalid comment data" };
+  }
+
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -67,9 +73,11 @@ export async function createComment(
   };
   const db = await getDb();
   const res = await db.collection(COLLECTION_NAME).insertOne(payload);
+
   if (!res.acknowledged) {
     return { data: null, error: "failed to create comment" };
   }
+
   return {
     data: CommentSchema.parse({
       id: res.insertedId.toHexString(),
@@ -163,6 +171,9 @@ export async function updateComment(
   id: string,
   data: TUpdateComment
 ): Promise<SAResponse<TComment>> {
+  if (!UpdateCommentSchema.safeParse(data).success) {
+    return { data: null, error: "invalid comment data" };
+  }
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };

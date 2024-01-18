@@ -1,5 +1,5 @@
 "use client";
-import { TPost } from "@/app/(appforum)/_actions/schema";
+import { TPost } from "@/lib/db/appforum";
 import { TPagination } from "@/lib/db/types";
 import { PostItem } from "./post-item";
 import {
@@ -40,7 +40,7 @@ export const PostPagination = (
 
   return (
     <>
-      <div className="container my-2 space-y-2">
+      <div className="container flex flex-col items-center justify-center my-2 space-y-2">
         {items.map((post) => (
           <PostItem key={post.id} post={post} />
         ))}

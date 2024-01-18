@@ -13,7 +13,9 @@ export default function NotFound() {
       <CardContent className="flex flex-col items-center justify-center ">
         <h1 className="text-6xl font-bold">404</h1>
         <ErrorBird />
-        <h2 className="text-xl font-bold">Chip Chip where're you going ?</h2>
+        <h2 className="text-xl font-bold">
+          Chip Chip where&apos;re you going ?
+        </h2>
       </CardContent>
       <CardFooter className="flex justify-between w-full">
         <Link href="/forum">

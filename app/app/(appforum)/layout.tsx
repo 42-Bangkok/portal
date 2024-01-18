@@ -22,11 +22,11 @@ export default function ForumRootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <nav>
+          <nav className="sticky top-0 z-50 bg-background">
             <ForumNavBar />
           </nav>
           <div className="m-4">{children}</div>
-          <Toaster />
+          <Toaster richColors />
         </body>
       </html>
     </Providers>

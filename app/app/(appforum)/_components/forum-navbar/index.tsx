@@ -5,13 +5,20 @@ import { HomeIcon, List } from "lucide-react";
 
 export const ForumNavBar = () => {
   return (
-    <div className="flex justify-center gap-3 p-2 m-0 shadow">
+    <div className="flex justify-between gap-3 p-2 m-0 shadow">
       <Link href="/">
         <Button size={"icon"} variant={"ghost"}>
           <HomeIcon />
         </Button>
       </Link>
-      <ForumSearchBar />
+      <div className="flex gap-2">
+        <Link href="/forum">
+          <Button size={"icon"} variant={"ghost"}>
+            <HomeIcon />
+          </Button>
+        </Link>
+        <ForumSearchBar />
+      </div>
       <Link href="/forum/create">
         <Button>Create Post</Button>
       </Link>

@@ -1,5 +1,27 @@
 import z from "zod";
 
+// Tag schema
+
+export const TagSchema = z.object({
+  id: z.string(),
+  label: z
+    .string()
+    .min(3, "tag need at least 3 letters")
+    .max(50, "tag can't be longer than 20 letters")
+    .refine((value) => /^[a-zA-Z0-9]+$/.test(value), {
+      message: "Tag name can only contain alphanumeric characters."
+    }),
+  createdAt: z.string(),
+  updatedAt: z.string()
+});
+
+export const CreateTagSchema = z.object({
+  name: z.string()
+});
+
+export type TTag = z.infer<typeof TagSchema>;
+export type TCreateTag = z.infer<typeof CreateTagSchema>;
+
 // Comment schema
 export const CreateCommentSchema = z.object({
   content: z.string(),
@@ -24,9 +46,15 @@ export type TComment = z.infer<typeof CommentSchema>;
 
 // Post schema
 export const CreatePostSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  tags: z.array(z.string()),
+  title: z
+    .string()
+    .min(3, "Title must be at least 3 character long.")
+    .max(
+      500,
+      "Title must be less than 500 characters. This is because I don't want to deal with long titles."
+    ),
+  content: z.string().min(1, "Post must have content. Please write something."),
+  tags: z.array(TagSchema),
   isAnonymous: z.boolean().optional()
 });
 
@@ -44,6 +72,6 @@ export const PostSchema = CreatePostSchema.extend({
   updatedAt: z.string()
 });
 
+export type TPost = z.infer<typeof PostSchema>;
 export type TCreatePost = z.infer<typeof CreatePostSchema>;
 export type TUpdatePost = z.infer<typeof UpdatePostSchema>;
-export type TPost = z.infer<typeof PostSchema>;

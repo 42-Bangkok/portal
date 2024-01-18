@@ -132,7 +132,6 @@ export async function getPagePosts(
     .skip(amt * page)
     .limit(amt)
     .toArray();
-  console.log(res);
   const posts = res.map((post) => {
     return {
       id: post._id.toHexString(),

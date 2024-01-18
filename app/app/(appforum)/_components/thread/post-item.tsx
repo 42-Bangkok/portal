@@ -1,18 +1,26 @@
 "use client";
-import { TPost } from "@/app/(appforum)/_actions/schema";
+import { TPost } from "@/lib/db/appforum";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import MDEditor from "@uiw/react-md-editor";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const PostItem = (props: { post: TPost }) => {
   const { post } = props;
   return (
-    <Card className="container p-5 py-10 h-fit w-[800px] flex space-x-4">
-      <div className="items-center p-4 px-0">
-        <Skeleton className="w-8 h-full" />
-      </div>
-      <Link href={`/forum/${post.id}`}>
+    <article>
+      <slot name="post-item" />
+      <Card className="relative p-5 py-10 h-fit w-[800px] flex space-x-4">
+        {/* <div className="items-center p-4 px-0">
+          <Skeleton className="w-8 h-full" />
+        </div> */}
+        <Link
+          href={`/forum/${post.id}`}
+          className="absolute inset-0"
+          slot="post-item"
+        />
         <div className="flex-grow space-y-4">
           <div className="flex items-center space-x-4">
             <div>
@@ -23,9 +31,14 @@ export const PostItem = (props: { post: TPost }) => {
             </div>
           </div>
           <p className="text-xl text-ellipsis ">{post.title}</p>
+          {post.tags.map((tag) => (
+            <Badge key={tag.id} className="relative text-xs">
+              {tag.label}
+            </Badge>
+          ))}
         </div>
-      </Link>
-    </Card>
+      </Card>
+    </article>
   );
 };
 
