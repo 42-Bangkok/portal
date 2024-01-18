@@ -7,6 +7,7 @@ https://portal.42bangkok.com is a web service diligently maintained by the cadet
 Welcome to our open-source project! We appreciate your interest in contributing. Before you start, please take a moment to read through this guide to understand how you can contribute effectively.
 
 # About using MongoDB
+
 Currently, Portal's database layer works like this  
 DB Layer: zod validates -> db calls -> zod validates + add defaults  
 It results in a type safe environment, but it is far from ideal. DB layer will more gets complex overtime.
@@ -30,6 +31,8 @@ To get started with contributing, you'll need to follow these steps:
 4. Make your changes and commit them: `git commit -m "Add your message here"`.
 5. Push your changes to your fork: `git push origin your-feature`.
 6. Create a **Pull Request** (PR) from your branch to the main repository.
+
+#### Read [DEV-GUIDE.md](/DEV-GUIDE.md) for more information
 
 ## Deploying project on local machine
 
