@@ -29,3 +29,4 @@ export default ContactPage
 Why?
 
 - We know right away which component renders the page since the name is always Page
+- `const ContactPage` is it really the page component? Not sure till scolled down to `export default ContactPage`
