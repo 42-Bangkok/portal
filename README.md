@@ -7,6 +7,7 @@ https://portal.42bangkok.com is a web service diligently maintained by the cadet
 Welcome to our open-source project! We appreciate your interest in contributing. Before you start, please take a moment to read through this guide to understand how you can contribute effectively.
 
 # About using MongoDB
+
 Currently, Portal's database layer works like this  
 DB Layer: zod validates -> db calls -> zod validates + add defaults  
 It results in a type safe environment, but it is far from ideal. DB layer will more gets complex overtime.
@@ -80,7 +81,7 @@ We follow a set of coding guidelines to maintain code consistency. Please review
 
 - Your PR must be reviewed
 - npm run build must pass
-- follow sensible coding style
+- follow NORM.md, and sensible coding style
 
 ## Code of Conduct
 
