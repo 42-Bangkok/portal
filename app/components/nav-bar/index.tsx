@@ -41,6 +41,12 @@ const components: {
     href: "/resume",
     target: "_self",
     description: "Your public resume"
+  },
+  {
+    title: "Active Cadets",
+    href: "/active-cadets",
+    target: "_self",
+    description: "42Bangkok active cadets"
   }
 ];
 
