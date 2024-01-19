@@ -12,8 +12,6 @@ import {
   PaginationPrevious
 } from "@/components/ui/pagination";
 import React from "react";
-import { cx } from "class-variance-authority";
-import { EmptyThread } from "./empty-thread";
 
 function calculatePagination(page: number, total_page: number) {
   const start = Math.max(1, page - 1);
@@ -40,7 +38,7 @@ export const PostPagination = (
 
   return (
     <>
-      <div className="container flex flex-col items-center justify-center my-2 space-y-2">
+      <div className="container flex flex-col items-center justify-center my-2 space-y-1">
         {items.map((post) => (
           <PostItem key={post.id} post={post} />
         ))}

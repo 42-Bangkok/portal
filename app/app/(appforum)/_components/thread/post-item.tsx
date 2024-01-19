@@ -1,43 +1,39 @@
 "use client";
+
+import Link from "next/link";
+
 import { TPost } from "@/lib/db/appforum";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
-import MDEditor from "@uiw/react-md-editor";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 export const PostItem = (props: { post: TPost }) => {
   const { post } = props;
   return (
-    <article>
-      <slot name="post-item" />
-      <Card className="relative p-5 py-10 h-fit w-[800px] flex space-x-4">
-        {/* <div className="items-center p-4 px-0">
-          <Skeleton className="w-8 h-full" />
-        </div> */}
-        <Link
-          href={`/forum/${post.id}`}
-          className="absolute inset-0"
-          slot="post-item"
-        />
-        <div className="flex-grow space-y-4">
-          <div className="flex items-center space-x-4">
-            <div>
-              <p>{post.createdBy}</p>
-              <p className="text-xs text-gray-500">
-                {new Date(post.createdAt).toLocaleString()}
-              </p>
-            </div>
-          </div>
-          <p className="text-xl text-ellipsis ">{post.title}</p>
-          {post.tags.map((tag) => (
-            <Badge key={tag.id} className="relative text-xs">
-              {tag.label}
-            </Badge>
-          ))}
-        </div>
-      </Card>
+    <article className="border-2 border-slate-400 relative p-2 h-fit w-[800px] max-h-28 flex flex-col space-y-1 ">
+      <Link
+        href={`/forum/${post.id}`}
+        className="absolute inset-0"
+        slot="post-item"
+      />
+
+      <div className="flex flex-col">
+        <p className="text-sm">{post.createdBy}</p>
+        <p className="text-xs text-gray-500">
+          {new Date(post.createdAt).toLocaleString()}
+        </p>
+      </div>
+
+      <p className="w-full pr-4 font-semibold line-clamp-2 text-md">
+        {post.title}
+      </p>
+      <div className="flex space-x-1">
+        {post.tags.map((tag) => (
+          <Badge key={tag.id} className="relative text-xs">
+            {tag.label}
+          </Badge>
+        ))}
+      </div>
     </article>
   );
 };

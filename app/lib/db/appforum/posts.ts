@@ -100,11 +100,11 @@ export async function getPost(id: string): Promise<SAResponse<TPost>> {
       content: res.content,
       tags: res.tags,
       createdBy:
-        !res.isAnoynomous && !(session.user.login == res.createdBy)
+        !res.isAnoynomous || !(session.user.login == res.createdBy)
           ? res.createdBy
           : "Anonymous",
       updatedBy:
-        !res.isAnoynomous && !(session.user.login == res.createdBy)
+        !res.isAnoynomous || !(session.user.login == res.createdBy)
           ? res.updatedBy
           : "Anonymous",
       createdAt: res.createdAt,

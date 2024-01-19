@@ -95,7 +95,7 @@ export async function createComment(
 export async function getComments(
   postId: string,
   amt: number
-): Promise<SAResponse<null> | TComment[]> {
+): Promise<SAResponse<null | TComment[]>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -113,11 +113,11 @@ export async function getComments(
       content: comment.content,
       isAnoyomous: comment.isAnoynomous,
       createdBy:
-        comment.isAnoynomous && !(session.user.login == comment.createdBy)
+        !comment.isAnoynomous || !(session.user.login === comment.createdBy)
           ? comment.createdBy
           : "Anonymous",
       updatedBy:
-        comment.isAnoynomous && !(session.user.login == comment.createdBy)
+        !comment.isAnoynomous || !(session.user.login === comment.createdBy)
           ? comment.updatedBy
           : "Anonymous",
       createdAt: comment.createdAt,
@@ -125,7 +125,7 @@ export async function getComments(
     });
     return _;
   });
-  return comments;
+  return { data: comments, error: null };
 }
 
 export async function deleteComment(id: string): Promise<SAResponse<boolean>> {
@@ -206,11 +206,11 @@ export async function updateComment(
       id: id,
       content: data.content,
       createdBy:
-        comment.isAnoynomous && !(session.user.login == comment.createdBy)
+        !comment.isAnoynomous || !(session.user.login === comment.createdBy)
           ? comment.createdBy
           : "Anonymous",
       updatedBy:
-        comment.isAnoynomous && !(session.user.login == comment.createdBy)
+        !comment.isAnoynomous || !(session.user.login === comment.createdBy)
           ? comment.updatedBy
           : "Anonymous",
       createdAt: comment.createdAt,
