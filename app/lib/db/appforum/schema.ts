@@ -55,23 +55,28 @@ export const CreatePostSchema = z.object({
     ),
   content: z.string().min(1, "Post must have content. Please write something."),
   tags: z.array(TagSchema),
-  isAnonymous: z.boolean().optional()
+  isAnonymous: z.boolean()
 });
 
 export const UpdatePostSchema = z.object({
   title: z.string().optional(),
   content: z.string().optional(),
-  tags: z.array(z.string()).optional()
+  tags: z.array(TagSchema)
 });
 
 export const PostSchema = CreatePostSchema.extend({
+  upvotes: z.array(z.string()),
+  featured: z.boolean(),
   id: z.string(),
+  isActive: z.boolean(),
   createdBy: z.string(),
   updatedBy: z.string(),
   createdAt: z.string(),
   updatedAt: z.string()
 });
 
+export type TPostCollection = Omit<TPost, "id">;
+export type TPostOut = Omit<TPost, "isAnonymous" | "isActive">;
 export type TPost = z.infer<typeof PostSchema>;
 export type TCreatePost = z.infer<typeof CreatePostSchema>;
 export type TUpdatePost = z.infer<typeof UpdatePostSchema>;

@@ -1,5 +1,5 @@
 import { getTags } from "@/lib/db/appforum/tags";
-import { PostCreateEditor } from "./post-editor";
+import { PostCreateEditor } from "./post-create-editor";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const PostEditor = async () => {

@@ -10,6 +10,7 @@
  * isActive: whether the post is active or not (post can only be truely deleted by staff)
  * isAnoynomous: whether the post is anonymous or not (we will still keep the login tho :p) (only allow on creation)
  * featured: whether the post is featured or not, only staff can feature posts
+ * upvotes: number of upvotes
  * createdBy: login of the user who created the marker, login can be changed but for simplicity we will use it instead of user id
  * updatedBy: login of the user who updated the marker, login can be changed but for simplicity we will use it instead of user id
  * createdAt: date when the marker was created
@@ -41,9 +42,15 @@
 
 import { auth } from "@/auth";
 import { getDb } from "@/lib/db/db";
-import { ObjectId } from "mongodb";
+import { ObjectId, WithId } from "mongodb";
 import { SAResponse, TPagination } from "@/lib/db/types";
-import { TCreatePost, TPost, TUpdatePost } from "./schema";
+import {
+  TCreatePost,
+  TPost,
+  TPostCollection,
+  TPostOut,
+  TUpdatePost
+} from "./schema";
 import { redirect } from "next/navigation";
 
 const COLLECTION_NAME = "appforum-posts";
@@ -61,14 +68,18 @@ export async function createPost(
     title: data.title,
     content: data.content,
     tags: data.tags,
-    isAnoynomous: data.isAnonymous || false,
+    isAnonymous: data.isAnonymous || false,
+    upvotes: [],
+    featured: false,
     createdBy: session.user.login,
     updatedBy: session.user.login,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
   const db = await getDb();
-  const res = await db.collection(COLLECTION_NAME).insertOne(payload);
+  const res = await db
+    .collection<TPostCollection>(COLLECTION_NAME)
+    .insertOne(payload);
   if (!res.acknowledged) {
     return { data: null, error: "failed to create post" };
   }
@@ -76,7 +87,7 @@ export async function createPost(
   redirect(`/forum/${postHexId}`);
 }
 
-export async function getPost(id: string): Promise<SAResponse<TPost>> {
+export async function getPost(id: string): Promise<SAResponse<TPostOut>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -99,6 +110,8 @@ export async function getPost(id: string): Promise<SAResponse<TPost>> {
       title: res.title,
       content: res.content,
       tags: res.tags,
+      upvotes: res.upvotes,
+      featured: res.featured,
       createdBy:
         !res.isAnoynomous || !(session.user.login == res.createdBy)
           ? res.createdBy
@@ -118,7 +131,7 @@ export async function getPagePosts(
   title: string,
   amt: number,
   page: number
-): Promise<SAResponse<null | TPagination<TPost>>> {
+): Promise<SAResponse<null | TPagination<TPostOut>>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -138,6 +151,8 @@ export async function getPagePosts(
       title: post.title,
       content: post.content,
       tags: post.tags,
+      upvotes: post.upvotes,
+      featured: post.featured,
       createdBy:
         !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.createdBy
@@ -212,7 +227,7 @@ export async function getPagePosts(
 
 export async function getPosts(
   amt: number
-): Promise<SAResponse<null | TPagination<TPost>>> {
+): Promise<SAResponse<null | TPagination<TPostOut>>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -231,6 +246,8 @@ export async function getPosts(
       title: post.title,
       content: post.content,
       tags: post.tags,
+      upvotes: post.upvotes,
+      featured: post.featured,
       createdBy:
         !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.createdBy
@@ -299,7 +316,7 @@ export async function deletePost(id: string): Promise<SAResponse<boolean>> {
 export async function updatePost(
   id: string,
   data: TUpdatePost
-): Promise<SAResponse<TPost>> {
+): Promise<SAResponse<TPostOut>> {
   const session = await auth();
   if (!session) {
     return { data: null, error: "not authenticated" };
@@ -334,7 +351,9 @@ export async function updatePost(
       id: id,
       title: data.title as string,
       content: data.content as string,
-      tags: data.tags as string[],
+      tags: data.tags,
+      upvotes: post.upvotes,
+      featured: post.featured,
       createdBy:
         !post.isAnoynomous || !(session.user.login === post.createdBy)
           ? post.createdBy
@@ -349,3 +368,30 @@ export async function updatePost(
     error: null
   };
 }
+
+export const upvotePost = async (id: string): Promise<SAResponse<boolean>> => {
+  const session = await auth();
+  if (!session) {
+    return { data: null, error: "not authenticated" };
+  }
+  if (ObjectId.isValid(id) === false) {
+    return { data: null, error: "invalid id" };
+  }
+  const db = await getDb();
+  const post = await db
+    .collection(COLLECTION_NAME)
+    .findOne({ _id: new ObjectId(id) });
+  if (!post) {
+    return { data: null, error: "post not found" };
+  }
+  if (post.createdBy === session.user.login) {
+    return { data: null, error: "cannot upvote own post" };
+  }
+  const res = await db
+    .collection(COLLECTION_NAME)
+    .updateOne({ _id: new ObjectId(id) }, { $inc: { upvotes: 1 } });
+  if (!res.acknowledged) {
+    return { data: null, error: "failed to upvote post" };
+  }
+  return { data: true, error: null };
+};

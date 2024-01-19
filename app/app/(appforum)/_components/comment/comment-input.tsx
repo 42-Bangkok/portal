@@ -14,9 +14,12 @@ import { cx } from "class-variance-authority";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const CommentInput = (props: { postId: string }) => {
   const [hidden, setHidden] = React.useState(true);
+
+  const router = useRouter();
 
   const form = useForm<TCreateComment>({
     resolver: zodResolver(CreateCommentSchema),
@@ -33,6 +36,7 @@ export const CommentInput = (props: { postId: string }) => {
       return;
     }
     form.reset();
+    router.refresh();
   };
 
   return (
