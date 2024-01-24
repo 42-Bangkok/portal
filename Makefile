@@ -1,3 +1,5 @@
+export $(shell sed 's/=.*//' .env)
+
 all:
 	@echo "Usage make [target]\n\
 	available targets:\n\
@@ -21,6 +23,13 @@ build:
 start: build
 	@cd app && npm run start
 
+## Drizzle ## drizzle-kit is a tool to manage database migrations
+# see: https://orm.drizzle.team/kit-docs/overview#prototyping-with-db-push
+db-push:
+	cd app && npx drizzle-kit push:pg
+# see: https://orm.drizzle.team/kit-docs/overview#schema-updates
+db-generate:
+	cd app && npx drizzle-kit generate:pg
 clean:
 	@cd app && rm -rf .next
 

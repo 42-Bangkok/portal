@@ -4,11 +4,15 @@
  */
 import NextAuth from "next-auth";
 import FortyTwoProvider from "next-auth/providers/42-school";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/lib/db/db";
+import { profiles } from "./drizzle/accounts/profiles";
 
 export const {
   handlers: { GET, POST },
   auth
 } = NextAuth({
+  adapter: DrizzleAdapter(db),
   providers: [
     FortyTwoProvider({
       clientId: process.env.AUTH_42_SCHOOL_CLIENT_ID,
@@ -16,25 +20,22 @@ export const {
     })
   ],
   callbacks: {
-    async jwt({ token, trigger, profile }) {
-      if (profile && trigger === "signIn") {
-        return {
-          ...token,
-          user: {
-            login: profile.login,
-            isStaff: profile["staff?"]
-          }
-        };
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        login: token.user.login,
-        isStaff: token.user.isStaff
-      };
+    async session({ session, user }) {
+      session.user.id = user.id;
       return session;
+    }
+  },
+  events: {
+    async linkAccount({ user }) {
+      // Create a profile for the user if it doesn't exist
+      if (user) {
+        await db
+          .insert(profiles)
+          .values({
+            user: user.id
+          })
+          .onConflictDoNothing();
+      }
     }
   }
 });

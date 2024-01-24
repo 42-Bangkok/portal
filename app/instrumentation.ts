@@ -12,9 +12,9 @@ function envManager() {
     "AUTH_42_SCHOOL_CLIENT_SECRET",
     "AUTH_URL",
     "AUTH_SECRET",
-    "MONGODB_URI"
+    "POSTGRES_URI"
   ];
-  let errs: any[] = [];
+  const errs: any[] = [];
   ENVS.forEach((env) => {
     if (!process.env[env]) {
       errs.push(env);
@@ -23,6 +23,7 @@ function envManager() {
   if (errs.length) {
     throw new Error(`Missing ENVs: ${errs.join(", ")}`);
   } else {
+    // eslint-disable-next-line no-console
     console.log("ENVs Check OK");
   }
 }
