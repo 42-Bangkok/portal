@@ -10,9 +10,12 @@ export const profiles = pgTable("profile", {
   id: uuid("id").defaultRandom().primaryKey(),
   isStaff: boolean("isStaff").notNull().default(false),
   isResumePublic: boolean("isResumePublic").notNull().default(false),
-  user: text("user").unique().notNull()
+  userId: text("userId")
+    .unique()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" })
 });
 
 export const profilesRelations = relations(profiles, ({ one }) => ({
-  user: one(users)
+  userId: one(users)
 }));

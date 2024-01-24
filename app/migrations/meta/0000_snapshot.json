@@ -1,5 +1,5 @@
 {
-  "id": "d1dd4956-342f-4a42-8952-f08cdd5106d0",
+  "id": "43050cae-873d-4845-9c78-19584a6b2e91",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -245,22 +245,36 @@
           "notNull": true,
           "default": false
         },
-        "user": {
-          "name": "user",
+        "userId": {
+          "name": "userId",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "profile_userId_user_id_fk": {
+          "name": "profile_userId_user_id_fk",
+          "tableFrom": "profile",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "profile_user_unique": {
-          "name": "profile_user_unique",
+        "profile_userId_unique": {
+          "name": "profile_userId_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "user"
+            "userId"
           ]
         }
       }

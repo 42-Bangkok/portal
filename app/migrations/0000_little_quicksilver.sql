@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS "profile" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"isStaff" boolean DEFAULT false NOT NULL,
 	"isResumePublic" boolean DEFAULT false NOT NULL,
-	"user" text NOT NULL,
-	CONSTRAINT "profile_user_unique" UNIQUE("user")
+	"userId" text NOT NULL,
+	CONSTRAINT "profile_userId_unique" UNIQUE("userId")
 );
 --> statement-breakpoint
 DO $$ BEGIN
@@ -50,6 +50,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "session" ADD CONSTRAINT "session_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "profile" ADD CONSTRAINT "profile_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

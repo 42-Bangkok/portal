@@ -32,7 +32,7 @@ export const {
         await db
           .insert(profiles)
           .values({
-            user: user.id
+            userId: user.id
           })
           .onConflictDoNothing();
       }
