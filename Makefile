@@ -1,5 +1,3 @@
-export $(shell sed 's/=.*//' .env)
-
 all:
 	@echo "Usage make [target]\n\
 	available targets:\n\
