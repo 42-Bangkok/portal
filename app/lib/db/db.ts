@@ -23,6 +23,7 @@ export async function getDb(): Promise<Db> {
 
 /**
  * Single client is instantiated and shared across the application.
+ * This Postgres client is used by Drizzle ORM.
  */
 const queryClient = postgres(`${process.env.POSTGRES_URI}`);
 export const db = drizzle(queryClient);
