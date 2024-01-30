@@ -1,5 +1,8 @@
 import { Db, MongoClient } from "mongodb";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
+// TODO: to be removed
 /**
  * Returns a connected MongoDB client.
  *
@@ -17,3 +20,10 @@ export async function getDb(): Promise<Db> {
     throw error;
   }
 }
+
+/**
+ * Single client is instantiated and shared across the application.
+ * This Postgres client is used by Drizzle ORM.
+ */
+const queryClient = postgres(`${process.env.POSTGRES_URI}`);
+export const db = drizzle(queryClient);
