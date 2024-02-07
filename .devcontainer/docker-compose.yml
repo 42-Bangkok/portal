@@ -38,3 +38,4 @@ services:
 
 volumes:
   postgres-data:
+  mongodb-data:
