@@ -27,3 +27,10 @@ export async function getDb(): Promise<Db> {
  */
 const queryClient = postgres(`${process.env.POSTGRES_URI}`);
 export const db = drizzle(queryClient);
+
+declare global {
+  // eslint-disable-next-line
+  var drizzle: any | undefined;
+}
+
+if (process.env.NODE_ENV !== "production") globalThis.drizzle = db;

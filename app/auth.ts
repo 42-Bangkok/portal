@@ -6,7 +6,7 @@ import NextAuth from "next-auth";
 import FortyTwoProvider from "next-auth/providers/42-school";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db/db";
-import { profiles } from "./drizzle/accounts/profiles";
+import { profiles } from "./drizzle/schemas/accounts/profiles";
 
 export const {
   handlers: { GET, POST },
