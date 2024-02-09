@@ -2,6 +2,7 @@
  * AuthJS's schema, do not edit. Create another table (and make 1-1 relationship) if you need to store extra user data.
  */
 import type { AdapterAccount } from "@auth/core/adapters";
+import { relations } from "drizzle-orm";
 import {
   integer,
   pgTable,
@@ -9,6 +10,7 @@ import {
   text,
   timestamp
 } from "drizzle-orm/pg-core";
+import { profiles } from "./profiles";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -17,6 +19,13 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image")
 });
+
+export const usersRelations = relations(users, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [users.id],
+    references: [profiles.userId]
+  })
+}));
 
 export const accounts = pgTable(
   "account",
